@@ -4,7 +4,7 @@ interface Genre {
   url: string
 }
 
-interface Result {
+export interface Song {
   id: string
   artistName: string
   name: string
@@ -16,23 +16,22 @@ interface Result {
   url: string
 }
 
-export interface Song {
+export interface SongFeed {
   feed: {
     country: string
     updated: string
-    results: Result[]
+    results: Song[]
   }
 }
 
-export interface SongResponse {
+export interface SongFeedResponse {
   country: string
   updated: string
-  results: Result[]
+  results: Song[]
 }
 
-export async function fetchMostPlayedSongs() {
-  const URL =
-    'https://rss.marketingtools.apple.com/api/v2/kr/music/most-played/100/songs.json'
+export async function fetchMostPlayedSongs(countryCode: string) {
+  const URL = `https://rss.marketingtools.apple.com/api/v2/${countryCode}/music/most-played/100/songs.json`
   try {
     const res = await fetch(URL)
 
@@ -41,10 +40,14 @@ export async function fetchMostPlayedSongs() {
       return null
     }
 
-    const song: Song = await res.json()
-    return song
+    const songFeed: SongFeed = await res.json()
+    return songFeed
   } catch (error) {
     console.error(error)
     return null
   }
+}
+
+export function getArtworkUrl(originalUrl: string, size: number = 300) {
+  return originalUrl.replace('100x100bb', `${size}x${size}bb`)
 }

@@ -1,15 +1,18 @@
-import type { Song, SongResponse } from '@/lib/songs'
-import { NextResponse } from 'next/server'
+import type { SongFeed, SongFeedResponse } from '@/lib/songs'
+import { NextRequest, NextResponse } from 'next/server'
 import { fetchMostPlayedSongs } from '@/lib/songs'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url)
+  const countryCode = searchParams.get('countryCode') ?? 'kr'
+
   try {
-    const data: Song | null = await fetchMostPlayedSongs()
+    const data: SongFeed | null = await fetchMostPlayedSongs(countryCode)
     if (!data) {
       return NextResponse.json({ error: 'Apple RSS API 응답 실패' }, { status: 500 })
     }
 
-    const response: SongResponse = {
+    const response: SongFeedResponse = {
       country: data.feed.country,
       updated: data.feed.updated,
       results: data.feed.results,
