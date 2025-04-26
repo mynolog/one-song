@@ -1,12 +1,19 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
+import MainLayout from '@/components/layouts/MainLayout'
 
 const pretendard = localFont({
   src: './assets/fonts/PretendardVariable.woff2',
   display: 'swap',
   weight: '45 920',
   variable: '--font-pretendard',
+})
+
+const outfit = localFont({
+  src: './assets/fonts/OutfitVariable.ttf',
+  display: 'swap',
+  variable: '--font-outfit',
 })
 
 export const metadata: Metadata = {
@@ -22,7 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${pretendard.variable} antialiased`}>{children}</body>
+      <body className={`${pretendard.className} ${outfit.variable} antialiased`}>
+        <MainLayout>{children}</MainLayout>
+      </body>
     </html>
   )
 }
