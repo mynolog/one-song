@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
       ) ?? data.results[0]
 
     const response: SongDetailResult = {
-      artistId: exactMatchSong.artistId,
       trackId: exactMatchSong.trackId,
       previewUrl: exactMatchSong.previewUrl,
       primaryGenreName: exactMatchSong.primaryGenreName,

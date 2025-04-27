@@ -11,7 +11,6 @@ export interface SongDetail {
 }
 
 export interface SongDetailResult {
-  artistId: number
   trackId: number
   previewUrl: string
   primaryGenreName: string
