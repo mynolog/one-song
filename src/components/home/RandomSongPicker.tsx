@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { getRandomIndex } from '@/lib/random'
 import RandomSongButton from './RandomSongButton'
 import { getArtworkUrl } from '@/lib/songs'
-import { ChevronRightIcon, Loader2, Music2, Music3 } from 'lucide-react'
+import { ChevronRightIcon, Loader2, Music, Music2, Music3 } from 'lucide-react'
 import { Button } from '../ui/button'
 import { formatDate } from '@/lib/date'
 
@@ -52,6 +52,10 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-4">
+      <div className="flex h-10 w-full items-center justify-center gap-2 text-lg font-bold text-gray-800">
+        <Music />
+        <span>한 곡의 음악이 하루를 바꿀지도 몰라요.</span>
+      </div>
       <div className="relative flex h-12 w-full items-center justify-center">
         <div
           className={`absolute transition-opacity duration-200 ease-in-out ${
