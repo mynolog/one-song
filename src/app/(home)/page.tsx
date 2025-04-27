@@ -1,4 +1,4 @@
-import type { SongFeedResponse, Song } from '@/lib/songs'
+import type { SongsFeedResponse, Song } from '@/lib/songs'
 import RandomSongPicker from '@/components/home/RandomSongPicker'
 import { getRandomIndex } from '@/lib/random'
 import { COUNTRIES } from '@/constants/rssQueryParams'
@@ -10,7 +10,7 @@ export default async function Home() {
   const res = await fetch(`http://localhost:3000/api/songs?countryCode=${countryCode}`, {
     cache: 'no-store',
   })
-  const json: SongFeedResponse = await res.json()
+  const json: SongsFeedResponse = await res.json()
   const songs: Song[] = json.results ?? []
 
   return (

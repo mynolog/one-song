@@ -16,7 +16,7 @@ export interface Song {
   url: string
 }
 
-export interface SongFeed {
+export interface SongsFeed {
   feed: {
     country: string
     updated: string
@@ -24,7 +24,7 @@ export interface SongFeed {
   }
 }
 
-export interface SongFeedResponse {
+export interface SongsFeedResponse {
   country: string
   updated: string
   results: Song[]
@@ -40,7 +40,7 @@ export async function fetchMostPlayedSongs(countryCode: string) {
       return null
     }
 
-    const songFeed: SongFeed = await res.json()
+    const songFeed: SongsFeed = await res.json()
     return songFeed
   } catch (error) {
     console.error(error)
