@@ -9,6 +9,7 @@ import RandomSongButton from './RandomSongButton'
 import { getArtworkUrl } from '@/lib/songs'
 import { ChevronRightIcon, Loader2, Music2, Music3 } from 'lucide-react'
 import { Button } from '../ui/button'
+import { formatDate } from '@/lib/date'
 
 interface RandomSongPickerProps {
   songs: Song[]
@@ -110,6 +111,9 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
               </a>
               <ChevronRightIcon className="flex-shrink-0" />
             </div>
+            <div className="text-sm text-gray-500">
+              {formatDate(pickedSong.releaseDate)}
+            </div>
             <div className="relative flex h-[54px] w-full items-center justify-center overflow-hidden rounded-full bg-[#f1f3f4]">
               <div
                 className={`absolute flex h-full w-full items-center justify-center gap-2 text-gray-500 transition-opacity duration-200 ${
@@ -123,6 +127,7 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
               <audio
                 src={pickedSongDetail?.previewUrl}
                 controls
+                controlsList="nodownload noplaybackrate"
                 autoPlay={false}
                 loop={false}
                 className={`absolute h-full w-full transition-opacity duration-200 ${
@@ -144,6 +149,9 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
               <span className="font-semibold text-gray-600">
                 추천 받기를 눌러 새로운 곡을 만나보세요!
               </span>
+              <div className="text-sm text-gray-500">
+                {formatDate(new Date())} 오늘의 노래
+              </div>
               <div className="flex h-[54px] w-full items-center justify-center gap-2 rounded-full bg-[#f1f3f4] text-gray-500">
                 <Music3 />
                 <span className="text-sm">좋은 음악이 기다리고 있어요.</span>
