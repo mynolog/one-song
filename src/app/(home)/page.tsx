@@ -14,7 +14,7 @@ export default async function Home() {
   const songs: Song[] = json.results ?? []
 
   return (
-    <div className="flex min-h-dvh w-full items-center justify-center">
+    <div className="flex h-full w-full flex-col items-center justify-center">
       <RandomSongPicker songs={songs} />
     </div>
   )

@@ -1,10 +1,14 @@
+import Footer from './Footer'
 import Header from './Header'
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div>
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main>{children}</main>
+      <main className="mt-14 flex flex-1 flex-col items-center justify-center">
+        {children}
+      </main>
+      <Footer />
     </div>
   )
 }
