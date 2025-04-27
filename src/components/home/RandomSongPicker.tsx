@@ -51,14 +51,39 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-4">
-      {isSongsReady ? (
-        <RandomSongButton onClick={handlePickRandomSong} />
-      ) : (
-        <Button disabled>
-          <Loader2 className="animate-spin" />
-          잠시만 기다려주세요..
-        </Button>
-      )}
+      <div className="relative flex h-12 w-full items-center justify-center">
+        <div
+          className={`absolute transition-opacity duration-200 ease-in-out ${
+            !pickedSong || pickedSongDetail
+              ? 'opacity-100'
+              : 'pointer-events-none opacity-0'
+          }`}
+        >
+          <RandomSongButton onClick={handlePickRandomSong} />
+        </div>
+
+        <div
+          className={`absolute transition-opacity duration-200 ease-in-out ${
+            !pickedSong || pickedSongDetail
+              ? 'pointer-events-none opacity-0'
+              : 'opacity-100'
+          }`}
+        >
+          <Button disabled className="h-12 w-75 hover:cursor-not-allowed">
+            <Loader2 className="animate-spin" />
+            좋은 노래를 고르는 중..
+          </Button>
+        </div>
+
+        {!isSongsReady && (
+          <div className="absolute opacity-100 transition-opacity duration-200 ease-in-out">
+            <Button disabled className="h-12 w-75">
+              <Loader2 className="animate-spin" />
+              잠시만 기다려주세요..
+            </Button>
+          </div>
+        )}
+      </div>
       {pickedSong ? (
         <div className="flex w-75 flex-col gap-4">
           <div className="overflow-hidden rounded-md">
