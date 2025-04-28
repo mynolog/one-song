@@ -6,3 +6,7 @@ export function formatDate(dateInput: string | Date) {
     day: '2-digit',
   })
 }
+
+export function formatTime(seconds: number) {
+  return new Date(seconds * 1000).toISOString().substring(14, 19)
+}
