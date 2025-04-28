@@ -13,9 +13,9 @@ interface AudioPlayerProps {
 }
 
 export default function AudioPlayer({
-  src = '',
-  collectionName = '',
-  collectionViewUrl = '',
+  src,
+  collectionName,
+  collectionViewUrl,
 }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -43,6 +43,22 @@ export default function AudioPlayer({
 
     return () => audio.removeEventListener('timeupdate', handleTimeUpdate)
   })
+  // 부드러운 Progress Bar 갱신
+  useEffect(() => {
+    let animationFrameId: number
+
+    const update = () => {
+      const audio = audioRef.current
+      if (audio) {
+        setCurrentTime(audio.currentTime)
+      }
+      animationFrameId = requestAnimationFrame(update)
+    }
+
+    animationFrameId = requestAnimationFrame(update)
+
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [])
 
   const handlePlay = () => {
     if (!audioRef.current) return
