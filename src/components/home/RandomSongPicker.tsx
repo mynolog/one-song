@@ -1,15 +1,16 @@
 'use client'
 
 import type { Song } from '@/lib/songs'
-import type { SongDetail } from '@/lib/song'
+import type { SongDetailResult } from '@/lib/song'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { getRandomIndex } from '@/lib/random'
 import RandomSongButton from './RandomSongButton'
 import { getArtworkUrl } from '@/lib/songs'
-import { ChevronRightIcon, Loader2, Music, Music2, Music3 } from 'lucide-react'
+import { ChevronRightIcon, Heart, Loader2, Music, Music2, Music3 } from 'lucide-react'
 import { Button } from '../ui/button'
-import { formatDate } from '@/lib/date'
+import { formatDate } from '@/lib/format'
+import AudioPlayer from '../common/AudioPlayer'
 
 interface RandomSongPickerProps {
   songs: Song[]
@@ -17,7 +18,7 @@ interface RandomSongPickerProps {
 
 export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
   const [pickedSong, setPickedSong] = useState<Song | null>(null)
-  const [pickedSongDetail, setPickedSongDetail] = useState<SongDetail | null>(null)
+  const [pickedSongDetail, setPickedSongDetail] = useState<SongDetailResult | null>(null)
 
   useEffect(() => {
     setPickedSongDetail(null)
@@ -33,7 +34,7 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
 
       try {
         const detail = await fetch(`http://localhost:3000/api/song/detail?${query}`)
-        const data: SongDetail = await detail.json()
+        const data: SongDetailResult = await detail.json()
         setPickedSongDetail(data)
       } catch (error) {
         console.error(error)
@@ -100,44 +101,53 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
               className="rounded-md transition-all duration-200 ease-in-out hover:scale-115"
             />
           </div>
+
           <div className="flex w-75 flex-col items-center justify-center gap-2">
-            <span className="w-full truncate overflow-hidden text-center text-lg font-bold">
-              {pickedSong.name}
-            </span>
-            <div className="flex w-full min-w-0 items-center justify-center font-semibold text-gray-600">
+            <div className="flex w-full items-center justify-center">
+              <span className="w-full truncate overflow-hidden text-center text-lg font-extrabold">
+                {pickedSong.name}
+              </span>
+              {/* TODO: 즐겨찾기 기능 구현하기 */}
+              <Heart />
+            </div>
+            <div className="flex items-center justify-center text-sm font-semibold text-gray-600 hover:text-green-600">
               <a
                 href={pickedSong.artistUrl}
-                className="max-w-full truncate"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="flex max-w-full items-center gap-1"
               >
                 {pickedSong.artistName}
+                <ChevronRightIcon className="h-4 w-4" />
               </a>
-              <ChevronRightIcon className="flex-shrink-0" />
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-muted-foreground text-xs">
               {formatDate(pickedSong.releaseDate)}
             </div>
-            <div className="relative flex h-[54px] w-full items-center justify-center overflow-hidden rounded-full bg-[#f1f3f4]">
+
+            <div className="relative flex h-22 w-full items-center justify-center overflow-hidden rounded-md bg-[#f1f3f4] py-2">
               <div
-                className={`absolute flex h-full w-full items-center justify-center gap-2 text-gray-500 transition-opacity duration-200 ${
-                  pickedSongDetail ? 'opacity-0' : 'opacity-100'
+                className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${
+                  pickedSongDetail ? 'pointer-events-none opacity-0' : 'opacity-100'
                 }`}
               >
                 <Loader2 className="animate-spin" />
-                <span className="text-sm font-semibold">미리듣기 준비 중..</span>
+                <span className="mt-2 text-sm font-semibold">미리듣기 준비 중..</span>
               </div>
 
-              <audio
-                src={pickedSongDetail?.previewUrl}
-                controls
-                controlsList="nodownload noplaybackrate"
-                autoPlay={false}
-                loop={false}
-                className={`absolute h-full w-full transition-opacity duration-200 ${
-                  pickedSongDetail ? 'opacity-100' : 'opacity-0'
+              <div
+                className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
+                  pickedSongDetail ? 'opacity-100' : 'pointer-events-none opacity-0'
                 }`}
-              />
+              >
+                {pickedSongDetail && (
+                  <AudioPlayer
+                    src={pickedSongDetail.previewUrl}
+                    collectionName={pickedSongDetail.collectionName}
+                    collectionViewUrl={pickedSongDetail.collectionViewUrl}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -149,14 +159,14 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
             </div>
 
             <div className="flex flex-col items-center justify-center gap-2">
-              <span className="text-lg font-bold">우연처럼 만나는 한 곡</span>
-              <span className="font-semibold text-gray-600">
+              <span className="text-lg font-extrabold">우연처럼 만나는 한 곡</span>
+              <span className="text-sm font-semibold text-gray-600">
                 추천 받기를 눌러 새로운 곡을 만나보세요!
               </span>
-              <div className="text-sm text-gray-500">
+              <div className="text-muted-foreground text-xs">
                 {formatDate(new Date())} 오늘의 노래
               </div>
-              <div className="flex h-[54px] w-full items-center justify-center gap-2 rounded-full bg-[#f1f3f4] text-gray-500">
+              <div className="relative flex h-22 w-full items-center justify-center overflow-hidden rounded-md bg-[#f1f3f4] py-2">
                 <Music3 />
                 <span className="text-sm">좋은 음악이 기다리고 있어요.</span>
               </div>

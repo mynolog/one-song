@@ -24,6 +24,8 @@ export async function GET(request: NextRequest) {
 
     const response: SongDetailResult = {
       trackId: exactMatchSong.trackId,
+      collectionName: exactMatchSong.collectionName,
+      collectionViewUrl: exactMatchSong.collectionViewUrl,
       previewUrl: exactMatchSong.previewUrl,
       primaryGenreName: exactMatchSong.primaryGenreName,
     }
