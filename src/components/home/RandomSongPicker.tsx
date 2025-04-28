@@ -7,7 +7,15 @@ import Image from 'next/image'
 import { getRandomIndex } from '@/lib/random'
 import RandomSongButton from './RandomSongButton'
 import { getArtworkUrl } from '@/lib/songs'
-import { ChevronRightIcon, Heart, Loader2, Music, Music2, Music3 } from 'lucide-react'
+import {
+  ChevronRightIcon,
+  Heart,
+  Loader2,
+  Music,
+  Music2,
+  Music3,
+  VolumeX,
+} from 'lucide-react'
 import { Button } from '../ui/button'
 import { formatDate } from '@/lib/format'
 import AudioPlayer from '../common/AudioPlayer'
@@ -110,15 +118,15 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
               {/* TODO: 즐겨찾기 기능 구현하기 */}
               <Heart />
             </div>
-            <div className="flex items-center justify-center text-sm font-semibold text-gray-600 hover:text-green-600">
+            <div className="flex w-full items-center justify-center overflow-hidden text-sm font-semibold text-gray-600 hover:text-green-600">
               <a
                 href={pickedSong.artistUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex max-w-full items-center gap-1"
+                className="flex w-full items-center justify-center"
               >
-                {pickedSong.artistName}
-                <ChevronRightIcon className="h-4 w-4" />
+                <span className="truncate">{pickedSong.artistName}</span>
+                <ChevronRightIcon className="h-4 flex-shrink-0" />
               </a>
             </div>
             <div className="text-muted-foreground text-xs">
@@ -140,13 +148,22 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
                   pickedSongDetail ? 'opacity-100' : 'pointer-events-none opacity-0'
                 }`}
               >
-                {pickedSongDetail && (
-                  <AudioPlayer
-                    src={pickedSongDetail.previewUrl}
-                    collectionName={pickedSongDetail.collectionName}
-                    collectionViewUrl={pickedSongDetail.collectionViewUrl}
-                  />
-                )}
+                {pickedSongDetail ? (
+                  pickedSongDetail.previewUrl ? (
+                    <AudioPlayer
+                      src={pickedSongDetail.previewUrl}
+                      collectionName={pickedSongDetail.collectionName}
+                      collectionViewUrl={pickedSongDetail.collectionViewUrl}
+                    />
+                  ) : (
+                    <div className="flex w-full items-center justify-center gap-2">
+                      <VolumeX className="text-muted-foreground h-6" />
+                      <span className="text-muted-foreground text-sm font-semibold">
+                        이 곡은 미리 듣기를 지원하지 않습니다.
+                      </span>
+                    </div>
+                  )
+                ) : null}
               </div>
             </div>
           </div>

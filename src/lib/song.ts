@@ -2,22 +2,21 @@ export interface SongDetail {
   artistId: number
   artistName: string
   collectionId: number
-  collectionName: string
-  trackId: number
+  collectionName?: string
+  trackId?: number
   trackName: string
   collectionArtistId: number
-  previewUrl: string
-  collectionViewUrl: string
+  previewUrl?: string
+  collectionViewUrl?: string
   artworkUrl100: string
-  primaryGenreName: string
+  primaryGenreName?: string
 }
 
 export interface SongDetailResult {
-  trackId: number
-  collectionName: string
-  collectionViewUrl: string
-  previewUrl: string
-  primaryGenreName: string
+  collectionName: string | null
+  collectionViewUrl: string | null
+  previewUrl: string | null
+  primaryGenreName: string | null
 }
 
 export interface SongDetailResponse {

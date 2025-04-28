@@ -23,11 +23,10 @@ export async function GET(request: NextRequest) {
       ) ?? data.results[0]
 
     const response: SongDetailResult = {
-      trackId: exactMatchSong.trackId,
-      collectionName: exactMatchSong.collectionName,
-      collectionViewUrl: exactMatchSong.collectionViewUrl,
-      previewUrl: exactMatchSong.previewUrl,
-      primaryGenreName: exactMatchSong.primaryGenreName,
+      collectionName: exactMatchSong?.collectionName || null,
+      collectionViewUrl: exactMatchSong?.collectionViewUrl || null,
+      previewUrl: exactMatchSong?.previewUrl || null,
+      primaryGenreName: exactMatchSong?.primaryGenreName || null,
     }
 
     return NextResponse.json(response, { status: 200 })

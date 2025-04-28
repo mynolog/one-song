@@ -8,14 +8,14 @@ import { formatTime } from '@/lib/format'
 
 interface AudioPlayerProps {
   src: string
-  collectionName: string
-  collectionViewUrl: string
+  collectionName: string | null
+  collectionViewUrl: string | null
 }
 
 export default function AudioPlayer({
   src = '',
-  collectionName,
-  collectionViewUrl,
+  collectionName = '',
+  collectionViewUrl = '',
 }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -129,17 +129,19 @@ export default function AudioPlayer({
             <Square />
           </Button>
         </div>
-        <div className="flex w-2/3 items-center justify-end overflow-hidden text-xs">
-          <a
-            href={collectionViewUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center truncate hover:text-green-600"
-          >
-            {collectionName}
-            <ChevronRightIcon className="h-4" />
-          </a>
-        </div>
+        {collectionName && collectionViewUrl && (
+          <div className="flex w-2/3 items-center overflow-hidden text-xs">
+            <a
+              href={collectionViewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-end hover:text-green-600"
+            >
+              <span className="truncate">{collectionName}</span>
+              <ChevronRightIcon className="h-4 flex-shrink-0" />
+            </a>
+          </div>
+        )}
       </div>
     </div>
   )
