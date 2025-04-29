@@ -4,7 +4,7 @@ import type { Song } from '@/lib/songs'
 import type { SongDetailResult } from '@/lib/song'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { getRandomIndex } from '@/lib/random'
+import { getRandomIndex } from '@/lib/getter'
 import RandomSongButton from './RandomSongButton'
 import { getArtworkUrl } from '@/lib/songs'
 import {

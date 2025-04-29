@@ -1,6 +1,6 @@
 import type { SongsFeedResponse, Song } from '@/lib/songs'
 import RandomSongPicker from '@/components/home/RandomSongPicker'
-import { getRandomIndex } from '@/lib/random'
+import { getRandomIndex } from '@/lib/getter'
 import { COUNTRIES } from '@/constants/rssQueryParams'
 import { getBaseUrl } from '@/lib/getter'
 
