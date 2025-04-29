@@ -19,6 +19,7 @@ import {
 import { Button } from '../ui/button'
 import { formatDate } from '@/lib/format'
 import AudioPlayer from '../common/AudioPlayer'
+import { getBaseUrl } from '@/lib/getter'
 
 interface RandomSongPickerProps {
   songs: Song[]
@@ -34,6 +35,7 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
 
   useEffect(() => {
     if (!pickedSong) return
+    const baseUrl = getBaseUrl()
     const loadSongDetail = async () => {
       const query = new URLSearchParams({
         artistName: pickedSong.artistName,
@@ -41,7 +43,7 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
       })
 
       try {
-        const detail = await fetch(`http://localhost:3000/api/song/detail?${query}`)
+        const detail = await fetch(`${baseUrl}/api/song/detail?${query}`)
         const data: SongDetailResult = await detail.json()
         setPickedSongDetail(data)
       } catch (error) {

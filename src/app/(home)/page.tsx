@@ -2,12 +2,14 @@ import type { SongsFeedResponse, Song } from '@/lib/songs'
 import RandomSongPicker from '@/components/home/RandomSongPicker'
 import { getRandomIndex } from '@/lib/random'
 import { COUNTRIES } from '@/constants/rssQueryParams'
+import { getBaseUrl } from '@/lib/getter'
 
 export default async function Home() {
   const randomCountryIndex = getRandomIndex(COUNTRIES.length)
   const countryCode = COUNTRIES[randomCountryIndex].code
+  const baseURL = getBaseUrl()
 
-  const res = await fetch(`http://localhost:3000/api/songs?countryCode=${countryCode}`, {
+  const res = await fetch(`${baseURL}/api/songs?countryCode=${countryCode}`, {
     cache: 'no-store',
   })
   const json: SongsFeedResponse = await res.json()
