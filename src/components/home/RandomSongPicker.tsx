@@ -135,7 +135,7 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
               {formatDate(pickedSong.releaseDate)}
             </div>
 
-            <div className="relative flex h-22 w-full items-center justify-center overflow-hidden rounded-md bg-[#f1f3f4] py-2">
+            <div className="relative flex h-28 w-full items-center justify-center overflow-hidden rounded-md py-2 transition-all duration-200 ease-in-out hover:bg-[#f1f3f4]">
               <div
                 className={`absolute inset-0 flex flex-col items-center justify-center transition-opacity duration-200 ${
                   pickedSongDetail ? 'pointer-events-none opacity-0' : 'opacity-100'
@@ -185,7 +185,7 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
               <div className="text-muted-foreground text-xs">
                 {formatDate(new Date())} 오늘의 노래
               </div>
-              <div className="relative flex h-22 w-full items-center justify-center overflow-hidden rounded-md bg-[#f1f3f4] py-2">
+              <div className="relative flex h-28 w-full items-center justify-center overflow-hidden rounded-md py-2 transition-all duration-200 ease-in-out hover:bg-[#f1f3f4]">
                 <Music3 />
                 <span className="text-sm">좋은 음악이 기다리고 있어요.</span>
               </div>
