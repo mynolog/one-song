@@ -7,3 +7,10 @@ export function getBaseUrl() {
 export function getRandomIndex(length: number) {
   return Math.floor(Math.random() * length)
 }
+
+export function getArtworkUrl(originalUrl: string, size: number = 450) {
+  if (!originalUrl.includes('100x100bb')) {
+    throw new Error('유효하지 않은 url 형식입니다.')
+  }
+  return originalUrl.replace('100x100bb', `${size}x${size}bb`)
+}

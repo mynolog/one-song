@@ -47,7 +47,3 @@ export async function fetchMostPlayedSongs(countryCode: string) {
     return null
   }
 }
-
-export function getArtworkUrl(originalUrl: string, size: number = 300) {
-  return originalUrl.replace('100x100bb', `${size}x${size}bb`)
-}
