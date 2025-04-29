@@ -1,7 +1,7 @@
 'use client'
 import type { MouseEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { Play, Pause, Square, ChevronRightIcon } from 'lucide-react'
+import { Play, Pause, Square, ChevronRightIcon, Volume2, VolumeX } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Progress } from '../ui/progress'
 import { formatTime } from '@/lib/format'
@@ -19,6 +19,7 @@ export default function AudioPlayer({
 }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
   const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
 
@@ -96,6 +97,13 @@ export default function AudioPlayer({
     audio.currentTime = newTime
   }
 
+  const handleToggleMute = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    audio.muted = !audio.muted
+    setIsMuted(audio.muted)
+  }
+
   if (!src) {
     return null
   }
@@ -110,7 +118,7 @@ export default function AudioPlayer({
           />
         </div>
         <div className="flex justify-between text-[0.7rem] font-semibold">
-          <span>{formatTime(currentTime)}</span>
+          <span className="text-green-600">{formatTime(currentTime)}</span>
           <span className="text-muted-foreground">{formatTime(duration)}</span>
         </div>
       </div>
@@ -120,29 +128,41 @@ export default function AudioPlayer({
           {!isPlaying ? (
             <Button
               size="icon"
-              variant="outline"
-              className="h-7 w-7 rounded-full hover:cursor-pointer"
+              variant="ghost"
+              className="h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600"
               onClick={handlePlay}
             >
-              <Play />
+              <Play className="!h-7 !w-7" />
             </Button>
           ) : (
             <Button
               size="icon"
-              variant="outline"
-              className="h-7 w-7 rounded-full hover:cursor-pointer"
+              variant="ghost"
+              className="h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600"
               onClick={handlePause}
             >
-              <Pause />
+              <Pause className="!h-7 !w-7" />
             </Button>
           )}
           <Button
             size="icon"
-            variant="outline"
-            className="h-7 w-7 rounded-full hover:cursor-pointer"
+            variant="ghost"
+            className="h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600"
             onClick={handleReset}
           >
-            <Square />
+            <Square className="!h-7 !w-7" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600"
+            onClick={handleToggleMute}
+          >
+            {isMuted ? (
+              <VolumeX className="!h-7 !w-7" />
+            ) : (
+              <Volume2 className="!h-7 !w-7" />
+            )}
           </Button>
         </div>
         {collectionName && collectionViewUrl && (
