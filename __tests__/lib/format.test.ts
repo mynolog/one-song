@@ -7,9 +7,7 @@ describe('formatTime', () => {
   })
 
   test('유효하지 않은 입력이 넘어오면 에러를 던진다.', () => {
-    expect(() => formatTime(undefined as unknown as number)).toThrow(
-      '유효하지 않은 입력입니다.',
-    )
+    expect(() => formatTime(undefined as any)).toThrow('유효하지 않은 입력입니다.')
   })
 })
 
@@ -27,8 +25,6 @@ describe('formatDate', () => {
   })
 
   test('유효하지 않은 입력이 넘어오면 에러를 던진다.', () => {
-    expect(() => formatDate(undefined as unknown as string)).toThrow(
-      '유효하지 않은 입력입니다.',
-    )
+    expect(() => formatDate(undefined as any)).toThrow('유효하지 않은 입력입니다.')
   })
 })
