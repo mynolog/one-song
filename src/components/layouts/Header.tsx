@@ -1,4 +1,5 @@
 import Title from '../home/Title'
+import HeaderDrawerMenu from './HeaderDrawerMenu'
 
 export default function Header() {
   return (
@@ -8,12 +9,16 @@ export default function Header() {
       <nav className="grid h-full w-full max-w-[1200px] grid-cols-3 items-center px-6">
         <Title />
         <div className="flex items-center justify-center">
-          <h3>하루 한 곡, 새로운 발견</h3>
+          <h3 className="hidden md:block">하루 한 곡, 새로운 발견</h3>
         </div>
-        <ul className="flex items-center justify-end gap-5 font-semibold">
-          <li>Login</li>
-          <li>Join</li>
-        </ul>
+        <div className="flex w-full items-center justify-end gap-4">
+          <ul className="flex items-center justify-end gap-4 text-sm font-semibold">
+            <li className="hidden md:block">오늘의 추천 노래</li>
+            <li className="hidden md:block">내가 찜한 노래</li>
+            <li>로그인</li>
+          </ul>
+          <HeaderDrawerMenu className="cursor-pointer md:hidden" />
+        </div>
       </nav>
     </header>
   )
