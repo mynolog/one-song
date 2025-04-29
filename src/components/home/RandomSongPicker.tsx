@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { getRandomIndex } from '@/lib/getter'
 import RandomSongButton from './RandomSongButton'
-import { getArtworkUrl } from '@/lib/songs'
+import { getArtworkUrl } from '@/lib/getter'
 import {
   ChevronRightIcon,
   Heart,
