@@ -1,20 +1,16 @@
 'use client'
 
-import type { Song } from '@/lib/songs'
 import type { SongDetailResult } from '@/lib/song'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { getBaseUrl } from '@/lib/getter'
+import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
-interface UsePickedSongDetailProps {
-  pickedSong: Song | null
-}
-
-export default function usePickedSongDetail({ pickedSong }: UsePickedSongDetailProps) {
-  const [pickedSongDetail, setPickedSongDetail] = useState<SongDetailResult | null>(null)
+export default function usePickedSongDetail() {
+  const { pickedSongDetail, setPickedSongDetail, pickedSong } = usePickedSongStore()
 
   useEffect(() => {
     setPickedSongDetail(null)
-  }, [pickedSong])
+  }, [pickedSong, setPickedSongDetail])
 
   useEffect(() => {
     if (!pickedSong) return
@@ -34,7 +30,7 @@ export default function usePickedSongDetail({ pickedSong }: UsePickedSongDetailP
       }
     }
     loadSongDetail()
-  }, [pickedSong])
+  }, [pickedSong, setPickedSongDetail])
 
   return { pickedSongDetail }
 }
