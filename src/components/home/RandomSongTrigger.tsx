@@ -1,22 +1,18 @@
-import type { Song } from '@/lib/songs'
-import type { SongDetailResult } from '@/lib/song'
 import { Loader2 } from 'lucide-react'
 import RandomSongButton from './RandomSongButton'
 import { Button } from '../ui/button'
+import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
 interface RandomSongTriggerProps {
   onPickRandomSong: () => void
   isSongsReady: boolean
-  pickedSong: Song | null
-  pickedSongDetail: SongDetailResult | null
 }
 
 export default function RandomSongTrigger({
   onPickRandomSong,
   isSongsReady,
-  pickedSong,
-  pickedSongDetail,
 }: RandomSongTriggerProps) {
+  const { pickedSong, pickedSongDetail } = usePickedSongStore()
   return (
     <div className="flex h-12 w-full items-center justify-center">
       {isSongsReady ? (

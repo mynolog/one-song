@@ -1,18 +1,10 @@
-interface Genre {
-  genreId: string
-  name: string
-  url: string
-}
-
 export interface Song {
   id: string
   artistName: string
   name: string
   releaseDate: string
-  artistId: string
   artistUrl: string
   artworkUrl100: string
-  genres: Genre[]
   url: string
 }
 

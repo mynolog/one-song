@@ -1,10 +1,9 @@
 import type { Song } from '@/lib/songs'
 import type { SongDetailResult } from '@/lib/song'
-import { ChevronRightIcon, Heart, Loader2, VolumeX } from 'lucide-react'
+import { ChevronRightIcon, Heart } from 'lucide-react'
 import LikeControl from '../common/LikeControl'
 import { Button } from '../ui/button'
 import RandomSongArtwork from './RandomSongArtwork'
-import AudioPlayer from '../common/AudioPlayer'
 import { formatDate } from '@/lib/format'
 
 interface RandonSongCardProps {
@@ -51,32 +50,6 @@ export default function RandomSongCard({
         </div>
         <div className="text-muted-foreground text-xs">
           {formatDate(pickedSong.releaseDate)}
-        </div>
-
-        <div className="flex h-28 w-full items-center justify-center overflow-hidden rounded-md py-2 transition-all duration-200 ease-in-out hover:bg-[#f1f3f4]">
-          {pickedSongDetail ? (
-            <div className="flex w-full flex-col items-center justify-center">
-              {pickedSongDetail.previewUrl ? (
-                <AudioPlayer
-                  src={pickedSongDetail.previewUrl}
-                  collectionName={pickedSongDetail.collectionName}
-                  collectionViewUrl={pickedSongDetail.collectionViewUrl}
-                />
-              ) : (
-                <div className="flex w-full items-center justify-center gap-2">
-                  <VolumeX className="text-muted-foreground h-6" />
-                  <span className="text-muted-foreground text-sm font-semibold">
-                    이 곡은 미리 듣기를 지원하지 않습니다.
-                  </span>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center">
-              <Loader2 className="animate-spin" />
-              <span className="mt-2 text-sm font-semibold">미리듣기 준비 중..</span>
-            </div>
-          )}
         </div>
       </div>
     </div>
