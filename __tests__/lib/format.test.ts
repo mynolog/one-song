@@ -24,7 +24,10 @@ describe('formatDate', () => {
     expect(formatDate(dateInput)).not.toBe('2025-05-01')
   })
 
-  test('유효하지 않은 입력이 넘어오면 에러를 던진다.', () => {
-    expect(() => formatDate(undefined as any)).toThrow('유효하지 않은 입력입니다.')
+  test('유효하지 않은 입력이 넘어오면 "알 수 없음"을 반환한다.', () => {
+    const dateInput = new Date('invalidDate')
+    expect(formatDate(dateInput)).toBe('알 수 없음')
+    expect(formatDate(undefined as any)).toBe('알 수 없음')
+    expect(formatDate(null as any)).toBe('알 수 없음')
   })
 })
