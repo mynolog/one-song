@@ -1,10 +1,8 @@
 'use client'
 
 import type { Song } from '@/lib/songs'
-import type { SongDetailResult } from '@/lib/song'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
-import { getRandomIndex } from '@/lib/getter'
 import RandomSongButton from './RandomSongButton'
 import { getArtworkUrl } from '@/lib/getter'
 import {
@@ -19,8 +17,9 @@ import {
 import { Button } from '../ui/button'
 import { formatDate } from '@/lib/format'
 import AudioPlayer from '../common/AudioPlayer'
-import { getBaseUrl } from '@/lib/getter'
 import LikeControl from '../common/LikeControl'
+import usePickSong from '@/hooks/usePickSong'
+import usePickedSongDetail from '@/hooks/usePickedSongDetail'
 
 interface RandomSongPickerProps {
   songs: Song[]
@@ -28,39 +27,17 @@ interface RandomSongPickerProps {
 
 export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
   const [pickedSong, setPickedSong] = useState<Song | null>(null)
-  const [pickedSongDetail, setPickedSongDetail] = useState<SongDetailResult | null>(null)
+  const { pick } = usePickSong({ songs })
+  const { pickedSongDetail } = usePickedSongDetail({ pickedSong })
 
-  useEffect(() => {
-    setPickedSongDetail(null)
-  }, [pickedSong])
-
-  useEffect(() => {
-    if (!pickedSong) return
-    const baseUrl = getBaseUrl()
-    const loadSongDetail = async () => {
-      const query = new URLSearchParams({
-        artistName: pickedSong.artistName,
-        title: pickedSong.name,
-      })
-
-      try {
-        const detail = await fetch(`${baseUrl}/api/song/detail?${query}`)
-        const data: SongDetailResult = await detail.json()
-        setPickedSongDetail(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    loadSongDetail()
-  }, [pickedSong])
+  const isSongsReady = Array.isArray(songs) && songs.length > 0
 
   const handlePickRandomSong = () => {
-    const randomSongIndex = getRandomIndex(songs.length)
-    const song = songs[randomSongIndex]
-    setPickedSong(song)
+    const randomSong = pick()
+    if (randomSong) {
+      setPickedSong(randomSong)
+    }
   }
-
-  const isSongsReady = songs.length > 0
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-4">
