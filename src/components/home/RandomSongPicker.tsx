@@ -20,6 +20,7 @@ import { Button } from '../ui/button'
 import { formatDate } from '@/lib/format'
 import AudioPlayer from '../common/AudioPlayer'
 import { getBaseUrl } from '@/lib/getter'
+import LikeControl from '../common/LikeControl'
 
 interface RandomSongPickerProps {
   songs: Song[]
@@ -118,7 +119,21 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
                 {pickedSong.name}
               </span>
               {/* TODO: 즐겨찾기 기능 구현하기 */}
-              <Heart />
+              {pickedSong && pickedSongDetail ? (
+                <LikeControl
+                  pickedSong={pickedSong}
+                  pickedSongDetail={pickedSongDetail}
+                />
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  disabled={!pickedSong || !pickedSongDetail}
+                  className="rounded-full"
+                >
+                  <Heart className="gray-400" />
+                </Button>
+              )}
             </div>
             <div className="flex w-full items-center justify-center overflow-hidden text-sm font-semibold text-gray-600 hover:text-green-600">
               <a
