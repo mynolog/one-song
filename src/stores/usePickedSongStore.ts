@@ -4,7 +4,7 @@ import type { CountryCode } from '@/constants/rssQueryParams'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-interface PickedSongState {
+export interface PickedSongState {
   pickedSong: Song | null
   pickedSongDetail: SongDetailResult | null
   countryCode: CountryCode
