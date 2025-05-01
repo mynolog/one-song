@@ -2,12 +2,13 @@
 
 import type { MouseEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { Play, Pause, Square, ChevronRightIcon, Volume2, VolumeX } from 'lucide-react'
+import { Play, Pause, ChevronRightIcon, Volume2, VolumeX } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Progress } from '../ui/progress'
 import { formatTime } from '@/lib/format'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 import Image from 'next/image'
+import ShuffleButton from './ShuffleButton'
 
 export default function AudioPlayer() {
   const { pickedSong, pickedSongDetail } = usePickedSongStore()
@@ -60,14 +61,6 @@ export default function AudioPlayer() {
     if (!audioRef.current) return
     audioRef.current.pause()
     setIsPlaying(false)
-  }
-
-  const handleReset = () => {
-    if (!audioRef.current) return
-    audioRef.current.pause()
-    audioRef.current.currentTime = 0
-    setIsPlaying(false)
-    setCurrentTime(0)
   }
 
   const handleSeek = (e: MouseEvent<HTMLDivElement>) => {
@@ -130,14 +123,7 @@ export default function AudioPlayer() {
         )}
 
         <div className="flex h-full w-full items-center justify-center gap-5 pl-1">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600"
-            onClick={handleReset}
-          >
-            <Square className="!h-6 !w-6" />
-          </Button>
+          <ShuffleButton />
 
           {!isPlaying ? (
             <Button
