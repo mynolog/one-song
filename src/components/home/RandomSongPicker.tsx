@@ -1,6 +1,7 @@
 'use client'
 
 import type { Song } from '@/lib/songs'
+import type { CountryCode } from '@/constants/rssQueryParams'
 import usePickSong from '@/hooks/usePickSong'
 import usePickedSongDetail from '@/hooks/usePickedSongDetail'
 import RandomSongTrigger from './RandomSongTrigger'
@@ -10,10 +11,11 @@ import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
 interface RandomSongPickerProps {
   songs: Song[]
+  countryCode: CountryCode
 }
 
-export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
-  const { pickedSong, setPickedSong } = usePickedSongStore()
+export default function RandomSongPicker({ songs, countryCode }: RandomSongPickerProps) {
+  const { pickedSong, setPickedSong, setCountryCode } = usePickedSongStore()
   const { pick } = usePickSong({ songs })
   const { pickedSongDetail } = usePickedSongDetail()
 
@@ -23,6 +25,7 @@ export default function RandomSongPicker({ songs }: RandomSongPickerProps) {
     const randomSong = pick()
     if (randomSong) {
       setPickedSong(randomSong)
+      setCountryCode(countryCode)
     }
   }
 

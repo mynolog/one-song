@@ -2,12 +2,13 @@
 
 import type { MouseEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { Play, Pause, Square, ChevronRightIcon, Volume2, VolumeX } from 'lucide-react'
+import { Play, Pause, ChevronRightIcon, Volume2, VolumeX } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Progress } from '../ui/progress'
 import { formatTime } from '@/lib/format'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 import Image from 'next/image'
+import ShuffleButton from './ShuffleButton'
 
 export default function AudioPlayer() {
   const { pickedSong, pickedSongDetail } = usePickedSongStore()
@@ -18,12 +19,18 @@ export default function AudioPlayer() {
   const [currentTime, setCurrentTime] = useState(0)
 
   useEffect(() => {
+    setIsPlaying(false)
+    setIsMuted(false)
+    setCurrentTime(0)
+  }, [pickedSong])
+
+  useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
     const handleLoadedMetadata = () => setDuration(audio.duration)
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
     return () => audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
-  }, [])
+  }, [pickedSongDetail])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -31,7 +38,7 @@ export default function AudioPlayer() {
     const handleTimeUpdate = () => setCurrentTime(audio.currentTime)
     audio.addEventListener('timeupdate', handleTimeUpdate)
     return () => audio.removeEventListener('timeupdate', handleTimeUpdate)
-  })
+  }, [])
   // 부드러운 Progress Bar 갱신
   useEffect(() => {
     let animationFrameId: number
@@ -62,14 +69,6 @@ export default function AudioPlayer() {
     setIsPlaying(false)
   }
 
-  const handleReset = () => {
-    if (!audioRef.current) return
-    audioRef.current.pause()
-    audioRef.current.currentTime = 0
-    setIsPlaying(false)
-    setCurrentTime(0)
-  }
-
   const handleSeek = (e: MouseEvent<HTMLDivElement>) => {
     const audio = audioRef.current
     if (!audio || duration === 0) return
@@ -87,24 +86,31 @@ export default function AudioPlayer() {
     setIsMuted(audio.muted)
   }
 
-  if (!pickedSongDetail?.previewUrl) {
-    return null
-  }
   return (
     <div className="flex w-full flex-col items-center justify-center gap-1 bg-white">
-      {pickedSongDetail && (
-        <audio ref={audioRef} src={pickedSongDetail.previewUrl} className="hidden" />
-      )}
+      <audio
+        ref={audioRef}
+        src={pickedSongDetail?.previewUrl ?? undefined}
+        className="hidden"
+      />
       <div className="w-full px-4">
         <div onClick={handleSeek} className="relative w-full py-1">
           <Progress
             value={duration > 0 ? (currentTime / duration) * 100 : 0}
-            className="hover:cursor-pointer"
+            className={`${pickedSongDetail ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'}`}
           />
         </div>
         <div className="flex justify-between text-[0.7rem] font-semibold">
-          <span className="text-green-600">{formatTime(currentTime)}</span>
-          <span className="text-muted-foreground">{formatTime(duration)}</span>
+          <span
+            className={`${pickedSongDetail ? 'text-green-600' : 'text-muted-foreground'}`}
+          >
+            {formatTime(currentTime)}
+          </span>
+          {pickedSongDetail ? (
+            <span className="text-muted-foreground">{formatTime(duration)}</span>
+          ) : (
+            <span className="w-9 animate-pulse rounded bg-gray-200"></span>
+          )}
         </div>
       </div>
 
@@ -126,24 +132,25 @@ export default function AudioPlayer() {
             </div>
           </div>
         ) : (
-          <div></div>
+          // 곡 정보 스켈레톤
+          <div className="flex h-full w-full items-center gap-2 text-xs">
+            <div className="h-9 w-9 animate-pulse rounded-sm bg-gray-300"></div>
+            <div className="flex h-full w-3/4 flex-col justify-center gap-2">
+              <div className="h-3 w-30 animate-pulse rounded bg-gray-200" />
+              <div className="h-3 w-30 animate-pulse rounded bg-gray-200" />
+            </div>
+          </div>
         )}
 
         <div className="flex h-full w-full items-center justify-center gap-5 pl-1">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600"
-            onClick={handleReset}
-          >
-            <Square className="!h-6 !w-6" />
-          </Button>
+          <ShuffleButton isLoading={!pickedSongDetail} />
 
           {!isPlaying ? (
             <Button
               size="icon"
               variant="ghost"
-              className="h-11 w-11 rounded-full hover:cursor-pointer hover:text-green-600"
+              className="h-11 w-11 rounded-full hover:text-green-600"
+              disabled={!pickedSongDetail}
               onClick={handlePlay}
             >
               <Play className="!h-9 !w-9" />
@@ -153,6 +160,7 @@ export default function AudioPlayer() {
               size="icon"
               variant="ghost"
               className="h-11 w-11 rounded-full hover:cursor-pointer hover:text-green-600"
+              disabled={!pickedSongDetail}
               onClick={handlePause}
             >
               <Pause className="!h-9 !w-9" />
@@ -163,6 +171,7 @@ export default function AudioPlayer() {
             size="icon"
             variant="ghost"
             className="h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600"
+            disabled={!pickedSongDetail}
             onClick={handleToggleMute}
           >
             {isMuted ? (
@@ -173,17 +182,22 @@ export default function AudioPlayer() {
           </Button>
         </div>
 
-        {pickedSongDetail.collectionName && pickedSongDetail.collectionViewUrl && (
+        {pickedSongDetail ? (
           <div className="flex h-full w-full items-center overflow-hidden text-xs">
             <a
-              href={pickedSongDetail.collectionViewUrl}
+              href={pickedSongDetail?.collectionViewUrl ?? undefined}
               target="_blank"
               rel="noopener noreferrer"
               className="flex w-full items-center justify-end hover:text-green-600"
             >
-              <span className="truncate">{pickedSongDetail.collectionName}</span>
+              <span className="truncate">{pickedSongDetail?.collectionName ?? ''}</span>
               <ChevronRightIcon className="h-4 flex-shrink-0" />
             </a>
+          </div>
+        ) : (
+          // 앨범명 스켈레톤
+          <div className="flex h-full w-full items-center justify-end overflow-hidden text-xs">
+            <div className="h-3 w-40 animate-pulse rounded bg-gray-200" />
           </div>
         )}
       </div>
