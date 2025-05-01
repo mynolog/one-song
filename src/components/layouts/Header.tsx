@@ -4,7 +4,7 @@ import HeaderDrawerMenu from './HeaderDrawerMenu'
 export default function Header() {
   return (
     <header
-      className={`fixed top-0 z-50 flex h-14 w-full items-center justify-center border-b-2 border-gray-100 bg-white transition-transform duration-300 dark:border-gray-700 dark:bg-black`}
+      className={`fixed top-0 z-[99] flex h-14 w-full items-center justify-center border-b-2 border-gray-100 bg-white transition-transform duration-300 dark:border-gray-700 dark:bg-black`}
     >
       <nav className="grid h-full w-full max-w-[1200px] grid-cols-3 items-center px-6">
         <Title />

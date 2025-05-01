@@ -91,7 +91,7 @@ export default function AudioPlayer() {
     return null
   }
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-1">
+    <div className="flex w-full flex-col items-center justify-center gap-1 bg-white">
       {pickedSongDetail && (
         <audio ref={audioRef} src={pickedSongDetail.previewUrl} className="hidden" />
       )}
@@ -136,7 +136,7 @@ export default function AudioPlayer() {
             className="h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600"
             onClick={handleReset}
           >
-            <Square className="!h-7 !w-7" />
+            <Square className="!h-6 !w-6" />
           </Button>
 
           {!isPlaying ? (
@@ -146,7 +146,7 @@ export default function AudioPlayer() {
               className="h-11 w-11 rounded-full hover:cursor-pointer hover:text-green-600"
               onClick={handlePlay}
             >
-              <Play className="!h-10 !w-10" />
+              <Play className="!h-9 !w-9" />
             </Button>
           ) : (
             <Button
@@ -155,7 +155,7 @@ export default function AudioPlayer() {
               className="h-11 w-11 rounded-full hover:cursor-pointer hover:text-green-600"
               onClick={handlePause}
             >
-              <Pause className="!h-10 !w-10" />
+              <Pause className="!h-9 !w-9" />
             </Button>
           )}
 
@@ -166,9 +166,9 @@ export default function AudioPlayer() {
             onClick={handleToggleMute}
           >
             {isMuted ? (
-              <VolumeX className="!h-7 !w-7" />
+              <VolumeX className="!h-6 !w-6" />
             ) : (
-              <Volume2 className="!h-7 !w-7" />
+              <Volume2 className="!h-6 !w-6" />
             )}
           </Button>
         </div>

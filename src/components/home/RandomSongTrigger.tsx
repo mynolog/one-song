@@ -14,9 +14,9 @@ export default function RandomSongTrigger({
 }: RandomSongTriggerProps) {
   const { pickedSong, pickedSongDetail } = usePickedSongStore()
   return (
-    <div className="flex h-12 w-full items-center justify-center">
+    <div className="flex h-12 w-full max-w-75 items-center justify-center">
       {isSongsReady ? (
-        <div className={`transition-opacity duration-200 ease-in-out`}>
+        <div className={`w-full transition-opacity duration-200 ease-in-out`}>
           {!pickedSong || pickedSongDetail ? (
             <RandomSongButton onClick={onPickRandomSong} />
           ) : (

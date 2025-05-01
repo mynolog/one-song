@@ -8,8 +8,8 @@ export default function WithAudioLayout({ children }: { children: React.ReactNod
   const { pickedSongDetail } = usePickedSongStore()
 
   return (
-    <div className="relative flex h-full w-full justify-center">
-      <div className="fixed top-14 flex h-28 w-full max-w-[1200px] items-center justify-center overflow-hidden rounded-md py-2 transition-all duration-200 ease-in-out hover:bg-[#f1f3f4]">
+    <div className="relative z-50 flex h-full w-full justify-center">
+      <div className="fixed top-14 flex h-22 w-full max-w-[1200px] items-center justify-center overflow-hidden rounded-md bg-white transition-all duration-200 ease-in-out">
         {pickedSongDetail ? (
           <div className="flex w-full flex-col items-center justify-center">
             {pickedSongDetail.previewUrl ? (

@@ -16,10 +16,10 @@ export default function RandomSongCard({
   pickedSongDetail,
 }: RandonSongCardProps) {
   return (
-    <div className="flex w-75 flex-col gap-4">
+    <div className="flex w-[50vw] flex-col gap-4 sm:w-75">
       <RandomSongArtwork pickedSong={pickedSong} />
 
-      <div className="flex w-75 flex-col items-center justify-center gap-2">
+      <div className="flex w-full flex-col items-center justify-center gap-2">
         <div className="flex w-full items-center justify-center">
           <span className="w-full truncate overflow-hidden text-center text-lg font-extrabold">
             {pickedSong.name}

@@ -1,5 +1,5 @@
 import { Button } from '../ui/button'
-import { Music4 } from 'lucide-react'
+import { Shuffle } from 'lucide-react'
 
 interface RandomSongButtonProps {
   onClick: () => void
@@ -16,9 +16,9 @@ export default function RandomSongButton({
     <Button
       disabled={disabled}
       onClick={onClick}
-      className={`h-12 w-75 cursor-pointer ${className}`}
+      className={`h-12 w-full cursor-pointer ${className}`}
     >
-      <Music4 />
+      <Shuffle />
       <span className="font-semibold">추천 받기</span>
     </Button>
   )
