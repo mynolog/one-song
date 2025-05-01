@@ -22,7 +22,7 @@ export default function RandomSongTrigger({
           ) : (
             <Button disabled className="h-12 w-75 hover:cursor-not-allowed">
               <Loader2 className="animate-spin" />
-              좋은 노래를 고르는 중..
+              <span>곡 선택하는 중..</span>
             </Button>
           )}
         </div>

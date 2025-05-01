@@ -2,7 +2,7 @@
 
 import type { MouseEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
-import { Play, Pause, ChevronRightIcon, Volume2, VolumeX } from 'lucide-react'
+import { Play, Pause, ChevronRightIcon, Volume2, VolumeX, Music2 } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Progress } from '../ui/progress'
 import { formatTime } from '@/lib/format'
@@ -106,43 +106,55 @@ export default function AudioPlayer() {
           >
             {formatTime(currentTime)}
           </span>
-          {pickedSongDetail ? (
-            <span className="text-muted-foreground">{formatTime(duration)}</span>
-          ) : (
-            <span className="w-9 animate-pulse rounded bg-gray-200"></span>
-          )}
+          {pickedSong &&
+            (pickedSongDetail ? (
+              <span className="text-muted-foreground">{formatTime(duration)}</span>
+            ) : (
+              <span className="h-3 w-9 animate-pulse rounded bg-gray-200"></span>
+            ))}
         </div>
       </div>
 
       <div className="items-centerjustify-between grid w-full grid-cols-3 gap-1 px-4 font-semibold text-gray-600">
-        {pickedSong && pickedSongDetail ? (
-          <div className="flex h-full w-full items-center gap-2 text-xs">
-            <div className="h-9 w-9 rounded-sm bg-gray-400">
-              <Image
-                src={pickedSong.artworkUrl100}
-                width={36}
-                height={36}
-                className="rounded-sm"
-                alt={pickedSong.name}
-              />
+        {pickedSong ? (
+          pickedSongDetail ? (
+            <div className="flex h-full w-full items-center gap-2 text-xs">
+              <div className="h-9 w-9 rounded-sm bg-gray-400">
+                <Image
+                  src={pickedSong.artworkUrl100}
+                  width={36}
+                  height={36}
+                  className="rounded-sm"
+                  alt={pickedSong.name}
+                />
+              </div>
+              <div className="flex w-3/4 flex-col gap-1 overflow-hidden">
+                <span className="truncate">{pickedSong.name}</span>
+                <span className="truncate">{pickedSong.artistName}</span>
+              </div>
             </div>
-            <div className="flex w-3/4 flex-col gap-1 overflow-hidden">
-              <span className="truncate">{pickedSong.name}</span>
-              <span className="truncate">{pickedSong.artistName}</span>
+          ) : (
+            // 곡 정보 스켈레톤
+            <div className="flex h-full w-full items-center gap-2 text-xs">
+              <div className="h-9 w-9 animate-pulse rounded-sm bg-gray-300"></div>
+              <div className="flex h-full w-3/4 flex-col justify-center gap-2">
+                <div className="h-3 w-2/3 max-w-30 animate-pulse rounded bg-gray-200" />
+                <div className="h-3 w-2/3 max-w-30 animate-pulse rounded bg-gray-200" />
+              </div>
             </div>
-          </div>
+          )
         ) : (
-          // 곡 정보 스켈레톤
           <div className="flex h-full w-full items-center gap-2 text-xs">
-            <div className="h-9 w-9 animate-pulse rounded-sm bg-gray-300"></div>
+            <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-gray-200">
+              <Music2 className="!h-5 !w-5" />
+            </div>
             <div className="flex h-full w-3/4 flex-col justify-center gap-2">
-              <div className="h-3 w-30 animate-pulse rounded bg-gray-200" />
-              <div className="h-3 w-30 animate-pulse rounded bg-gray-200" />
+              재생 중이 아님
             </div>
           </div>
         )}
 
-        <div className="flex h-full w-full items-center justify-center gap-5 pl-1">
+        <div className="flex h-full w-full items-center justify-center gap-3 pl-1">
           <ShuffleButton isLoading={!pickedSongDetail} />
 
           {!isPlaying ? (
@@ -182,24 +194,25 @@ export default function AudioPlayer() {
           </Button>
         </div>
 
-        {pickedSongDetail ? (
-          <div className="flex h-full w-full items-center overflow-hidden text-xs">
-            <a
-              href={pickedSongDetail?.collectionViewUrl ?? undefined}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-center justify-end hover:text-green-600"
-            >
-              <span className="truncate">{pickedSongDetail?.collectionName ?? ''}</span>
-              <ChevronRightIcon className="h-4 flex-shrink-0" />
-            </a>
-          </div>
-        ) : (
-          // 앨범명 스켈레톤
-          <div className="flex h-full w-full items-center justify-end overflow-hidden text-xs">
-            <div className="h-3 w-40 animate-pulse rounded bg-gray-200" />
-          </div>
-        )}
+        {pickedSong &&
+          (pickedSongDetail ? (
+            <div className="flex h-full w-full items-center overflow-hidden text-xs">
+              <a
+                href={pickedSongDetail?.collectionViewUrl ?? undefined}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex w-full items-center justify-end hover:text-green-600"
+              >
+                <span className="truncate">{pickedSongDetail?.collectionName ?? ''}</span>
+                <ChevronRightIcon className="h-4 flex-shrink-0" />
+              </a>
+            </div>
+          ) : (
+            // 앨범명 스켈레톤
+            <div className="flex h-full w-full items-center justify-end overflow-hidden text-xs">
+              <div className="h-3 w-4/5 max-w-40 animate-pulse rounded bg-gray-200" />
+            </div>
+          ))}
       </div>
     </div>
   )

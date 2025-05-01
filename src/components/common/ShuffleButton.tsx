@@ -12,7 +12,7 @@ interface ShuffleButtonProps {
 }
 
 export default function ShuffleButton({ isLoading, className }: ShuffleButtonProps) {
-  const { countryCode, setPickedSong } = usePickedSongStore()
+  const { countryCode, pickedSongDetail, setPickedSong } = usePickedSongStore()
   const baseURL = getBaseUrl()
 
   const handleShuffle = async () => {
@@ -26,15 +26,19 @@ export default function ShuffleButton({ isLoading, className }: ShuffleButtonPro
     const randomIndex = getRandomIndex(songs.length)
     setPickedSong(songs[randomIndex])
   }
+  const pickedSong = usePickedSongStore((state) => state.pickedSong)
+  const isInitial = !pickedSong && !pickedSongDetail
+  const isPending = !!pickedSong && !pickedSongDetail
+  const isDisabled = isLoading || isPending
 
   return (
     <Button
       variant="ghost"
-      className={`relative h-10 w-10 rounded-full hover:cursor-pointer hover:text-green-600 ${className}`}
-      disabled={isLoading}
+      className={`relative h-10 w-10 rounded-full hover:text-green-600 ${className}`}
+      disabled={isDisabled && !isInitial}
       onClick={handleShuffle}
     >
-      {isLoading && (
+      {isPending && (
         <span className="absolute inset-0 flex items-center justify-center">
           <Loader2 className="!h-12 !w-12 animate-spin !text-green-600 !opacity-100" />
         </span>
