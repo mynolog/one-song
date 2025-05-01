@@ -8,6 +8,8 @@ import RandomSongTrigger from './RandomSongTrigger'
 import RandomSongCardSkeleton from './RandomSongCardSkeleton'
 import RandomSongCard from './RandomSongCard'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
+import CountrySelector from './CountrySelector'
+import { useCountryStore } from '@/stores/useCountryStore'
 
 interface RandomSongPickerProps {
   songs: Song[]
@@ -15,7 +17,8 @@ interface RandomSongPickerProps {
 }
 
 export default function RandomSongPicker({ songs, countryCode }: RandomSongPickerProps) {
-  const { pickedSong, setPickedSong, setCountryCode } = usePickedSongStore()
+  const { pickedSong, setPickedSong } = usePickedSongStore()
+  const { setCountryCode } = useCountryStore()
   const { pick } = usePickSong({ songs })
   const { pickedSongDetail } = usePickedSongDetail()
 
@@ -31,6 +34,7 @@ export default function RandomSongPicker({ songs, countryCode }: RandomSongPicke
 
   return (
     <div className="mt-40 mb-10 flex h-full w-[50vw] flex-col items-center justify-center gap-4 sm:w-full">
+      <CountrySelector />
       <RandomSongTrigger
         onPickRandomSong={handlePickRandomSong}
         isSongsReady={isSongsReady}

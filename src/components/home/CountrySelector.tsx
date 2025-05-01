@@ -1,0 +1,40 @@
+'use client'
+
+import type { CountryCode } from '@/constants/rssQueryParams'
+import { useRouter } from 'next/navigation'
+import { useCountryStore } from '@/stores/useCountryStore'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+
+export default function CountrySelector() {
+  const router = useRouter()
+  const { countryCode, setCountryCode } = useCountryStore()
+
+  const handleCountryChange = (value: CountryCode) => {
+    setCountryCode(value)
+    router.push(`/country/${value}`)
+  }
+
+  return (
+    <Select defaultValue={countryCode} onValueChange={handleCountryChange}>
+      <SelectTrigger className="max-w-75 sm:w-full">
+        <SelectValue placeholder="국가를 선택하세요." />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>🎧 Apple Music Top100</SelectLabel>
+          <SelectItem value="kr">🇰🇷 대한민국 (Korea, Republic of)</SelectItem>
+          <SelectItem value="jp">🇯🇵 일본 (Japan)</SelectItem>
+          <SelectItem value="us">🇺🇸 미국 (United States)</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  )
+}
