@@ -5,6 +5,7 @@ import { Loader2, Shuffle } from 'lucide-react'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 import { getBaseUrl, getRandomIndex } from '@/lib/getter'
 import { Button } from '../ui/button'
+import { useCountryStore } from '@/stores/useCountryStore'
 
 interface ShuffleButtonProps {
   isLoading: boolean
@@ -12,7 +13,8 @@ interface ShuffleButtonProps {
 }
 
 export default function ShuffleButton({ isLoading, className }: ShuffleButtonProps) {
-  const { countryCode, pickedSongDetail, setPickedSong } = usePickedSongStore()
+  const { pickedSongDetail, setPickedSong } = usePickedSongStore()
+  const { countryCode } = useCountryStore()
   const baseURL = getBaseUrl()
 
   const handleShuffle = async () => {

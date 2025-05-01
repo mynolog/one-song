@@ -9,11 +9,8 @@ export default function usePickedSongDetail() {
   const { pickedSongDetail, setPickedSongDetail, pickedSong } = usePickedSongStore()
 
   useEffect(() => {
-    setPickedSongDetail(null)
-  }, [pickedSong, setPickedSongDetail])
-
-  useEffect(() => {
     if (!pickedSong) return
+
     const baseUrl = getBaseUrl()
     const loadSongDetail = async () => {
       const query = new URLSearchParams({

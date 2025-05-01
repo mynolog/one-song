@@ -22,7 +22,7 @@ export default function AudioPlayer() {
     setIsPlaying(false)
     setIsMuted(false)
     setCurrentTime(0)
-  }, [pickedSong])
+  }, [pickedSong?.id])
 
   useEffect(() => {
     const audio = audioRef.current
