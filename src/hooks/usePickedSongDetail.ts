@@ -10,6 +10,8 @@ export default function usePickedSongDetail() {
 
   useEffect(() => {
     if (!pickedSong) return
+    // 국가 변경 시 pickedSongDetail 중복 요청 방지
+    if (pickedSong.id === pickedSongDetail?.id) return
 
     const baseUrl = getBaseUrl()
     const loadSongDetail = async () => {
@@ -30,7 +32,7 @@ export default function usePickedSongDetail() {
       }
     }
     loadSongDetail()
-  }, [pickedSong, setPickedSongDetail])
+  }, [pickedSong, pickedSongDetail, setPickedSongDetail])
 
   return { pickedSongDetail }
 }
