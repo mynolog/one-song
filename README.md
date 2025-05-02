@@ -17,7 +17,45 @@
 - `Next.js` (App Router 기반)
 - `TypeScript`
 - `TailwindCSS`
+- `Zustand`
 - `Jest`
+
+### 📦 프로젝트 구조
+
+```
+📁 프로젝트 루트
+├── __tests__/                   # 테스트 폴더 (src와 동일한 구조)
+├── public/                      # 정적 파일 (favicon, manifest 등)
+├── src/                         # 애플리케이션 소스 코드
+│   ├── app/                     # Next.js 앱 라우팅 구조
+│   │   ├── (home)               # 메인(/) 페이지 전용 그룹
+│   │   ├── (with-audio)         # 오디오 플레이어가 고정된 페이지 레이아웃 그룹
+│   │   ├── api                  # Next.js API 라우트 (서버 함수 기반 핸들러)
+│   │   └── assets               # 앱 정적 자산
+│   ├── components/              # 재사용 가능한 UI 및 기능 컴포넌트
+│   │   ├── common/              # 공통 컴포넌트 (AudioPlayer 등)
+│   │   └── ui/                  # shadcn/ui 기반 UI 컴포넌트 래퍼
+│   ├── constants/               # 상수값 정의 (국가 코드 등)
+│   ├── hooks/                   # 커스텀 훅 정의
+│   ├── lib/                     # 유틸 함수 및 API fetch 로직
+│   ├── stores/                  # Zustand 상태 관리 스토어
+│   └── types/                   # 타입 정의
+├── jest.config.ts               # Jest 설정
+├── tsconfig.json                # TypeScript 설정
+├── README.md
+└── package.json
+```
+
+### 🧠 상태 관리 설계 원칙
+
+- **전역 상태**
+
+  - 해당 상태를 소비하는 컴포넌트에서 직접 불러와서 사용
+  - 전역 상태를 `props`로 전달하는 방식은 지양
+
+- **지역 상태**
+  - 해당 상태를 필요로 하는 컴포넌트에 `props`로 전달하여 사용
+  - 컴포넌트 뎁스가 3단계 이상 넘어갈 경우 전역 상태로 승격 고려
 
 ### ✨ 구현 기능
 
