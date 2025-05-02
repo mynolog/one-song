@@ -6,14 +6,12 @@ import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
 interface TrackInfoProps {
   isInitialPlayer: boolean
-  isSkeletonVisible: boolean
   isWatingForDetail: boolean
   isReady: boolean
 }
 
 export default function TrackInfo({
   isInitialPlayer,
-  isSkeletonVisible,
   isWatingForDetail,
   isReady,
 }: TrackInfoProps) {
@@ -31,17 +29,7 @@ export default function TrackInfo({
           </div>
         </>
       )}
-      {isSkeletonVisible && (
-        <>
-          <div className="flex h-full w-full items-center gap-2 text-xs">
-            <div className="h-9 w-9 animate-pulse rounded-sm bg-gray-300"></div>
-            <div className="flex h-full w-3/4 flex-col justify-center gap-2">
-              <div className="h-3 w-2/3 max-w-30 animate-pulse rounded bg-gray-200" />
-              <div className="h-3 w-2/3 max-w-30 animate-pulse rounded bg-gray-200" />
-            </div>
-          </div>
-        </>
-      )}
+
       {(isReady || isWatingForDetail) && pickedSong && (
         <>
           <div className="h-9 w-9 rounded-sm bg-gray-400">

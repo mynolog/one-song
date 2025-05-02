@@ -29,7 +29,6 @@ export default function NowPlayingControls({
     <div className="items-centerjustify-between grid w-full grid-cols-3 gap-1 px-4 font-semibold text-gray-600">
       <TrackInfo
         isInitialPlayer={isInitialPlayer}
-        isSkeletonVisible={isSkeletonVisible}
         isWatingForDetail={isWatingForDetail}
         isReady={isReady}
       />

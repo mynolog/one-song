@@ -24,7 +24,7 @@ export default function CountrySelector() {
 
   return (
     <Select defaultValue={countryCode} onValueChange={handleCountryChange}>
-      <SelectTrigger className="max-w-75 sm:w-full">
+      <SelectTrigger className="w-full max-w-75">
         <SelectValue placeholder="국가를 선택하세요." />
       </SelectTrigger>
       <SelectContent>
