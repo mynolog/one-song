@@ -1,11 +1,14 @@
 'use client'
 
 import type { Song, SongsFeedResponse } from '@/lib/songs'
+
 import { Loader2, Shuffle } from 'lucide-react'
-import { usePickedSongStore } from '@/stores/usePickedSongStore'
+
 import { getBaseUrl, getRandomIndex } from '@/lib/getter'
-import { Button } from '../../ui/button'
 import { useCountryStore } from '@/stores/useCountryStore'
+import { usePickedSongStore } from '@/stores/usePickedSongStore'
+
+import { Button } from '../../ui/button'
 
 interface ShuffleButtonProps {
   isLoading: boolean

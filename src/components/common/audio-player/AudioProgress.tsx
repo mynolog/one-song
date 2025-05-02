@@ -1,4 +1,5 @@
 import type { MouseEvent } from 'react'
+
 import { Progress } from '@/components/ui/progress'
 import { formatTime } from '@/lib/format'
 

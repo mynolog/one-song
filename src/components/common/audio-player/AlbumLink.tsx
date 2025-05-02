@@ -1,7 +1,8 @@
 'use client'
 
-import { usePickedSongStore } from '@/stores/usePickedSongStore'
 import { ChevronRightIcon } from 'lucide-react'
+
+import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
 interface AlbumLinkProps {
   isSkeletonVisible: boolean

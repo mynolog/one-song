@@ -1,5 +1,7 @@
 import type { SongsFeed, SongsFeedResponse } from '@/lib/songs'
+
 import { NextRequest, NextResponse } from 'next/server'
+
 import { fetchMostPlayedSongs } from '@/lib/songs'
 
 export async function GET(request: NextRequest) {

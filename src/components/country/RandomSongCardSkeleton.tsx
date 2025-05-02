@@ -1,6 +1,8 @@
 import { Heart, Music2 } from 'lucide-react'
-import { Button } from '../ui/button'
+
 import { formatDate } from '@/lib/format'
+
+import { Button } from '../ui/button'
 
 export default function RandomSongCardSkeleton() {
   return (

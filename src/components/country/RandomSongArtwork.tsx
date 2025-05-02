@@ -1,5 +1,7 @@
 import type { Song } from '@/lib/songs'
+
 import Image from 'next/image'
+
 import { getArtworkUrl } from '@/lib/getter'
 
 interface RandomSongArtworkProps {

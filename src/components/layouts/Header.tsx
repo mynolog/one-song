@@ -1,5 +1,5 @@
-import Title from '../home/Title'
 import HeaderDrawerMenu from './HeaderDrawerMenu'
+import Title from '../common/Title'
 
 export default function Header() {
   return (

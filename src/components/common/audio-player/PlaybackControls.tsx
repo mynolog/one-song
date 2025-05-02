@@ -1,6 +1,8 @@
 import { Pause, Play, Volume2, VolumeX } from 'lucide-react'
-import ShuffleButton from './ShuffleButton'
+
 import { Button } from '@/components/ui/button'
+
+import ShuffleButton from './ShuffleButton'
 
 interface PlaybackControlsProps {
   isInitialPlayer: boolean

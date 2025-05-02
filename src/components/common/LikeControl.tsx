@@ -1,8 +1,11 @@
-import type { Song } from '@/lib/songs'
 import type { SongDetailResult } from '@/lib/song'
+import type { Song } from '@/lib/songs'
 import type { LikedSong } from '@/stores/useGuestStore'
+
 import { Heart } from 'lucide-react'
+
 import { useGuestStore } from '@/stores/useGuestStore'
+
 import { Button } from '../ui/button'
 
 interface LikeControlProps {

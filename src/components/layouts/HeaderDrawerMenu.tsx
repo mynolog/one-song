@@ -1,4 +1,6 @@
 import { Menu } from 'lucide-react'
+
+import Title from '../common/Title'
 import {
   Drawer,
   DrawerContent,
@@ -7,7 +9,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '../ui/drawer'
-import Title from '../home/Title'
 
 interface HeaderDrawerMenuProps {
   className: string

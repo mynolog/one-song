@@ -1,5 +1,6 @@
-import { Button } from '../ui/button'
 import { Loader2, Shuffle } from 'lucide-react'
+
+import { Button } from '../ui/button'
 
 interface RandomSongButtonProps {
   onClick: () => void
