@@ -6,12 +6,13 @@ import { fetchSongDetail } from '@/lib/song'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
+  const id = searchParams.get('id')
   const artistName = searchParams.get('artistName')
   const title = searchParams.get('title')
 
-  if (!artistName || !title) {
+  if (!artistName || !title || !id) {
     return NextResponse.json(
-      { error: 'artistName, title은 필수입니다.' },
+      { error: 'id, artistName, title은 필수입니다.' },
       { status: 400 },
     )
   }
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
       ) ?? data.results[0]
 
     const response: SongDetailResult = {
-      id: null,
+      id,
       collectionName: exactMatchSong?.collectionName || null,
       collectionViewUrl: exactMatchSong?.collectionViewUrl || null,
       previewUrl: exactMatchSong?.previewUrl || null,

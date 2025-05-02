@@ -19,6 +19,7 @@ export default function usePickedSongDetail() {
     const baseUrl = getBaseUrl()
     const loadSongDetail = async () => {
       const query = new URLSearchParams({
+        id: pickedSong.id,
         artistName: pickedSong.artistName,
         title: pickedSong.name,
       })
@@ -28,7 +29,6 @@ export default function usePickedSongDetail() {
         const data: SongDetailResult = await detail.json()
         setPickedSongDetail({
           ...data,
-          id: pickedSong.id,
         })
       } catch (error) {
         console.error(error)
