@@ -13,6 +13,7 @@ export interface SongDetail {
 }
 
 export interface SongDetailResult {
+  id: string | null
   collectionName: string | null
   collectionViewUrl: string | null
   previewUrl: string | null

@@ -1,4 +1,4 @@
-import AudioPlayer from '@/components/common/AudioPlayer'
+import AudioPlayer from '@/components/common/audio-player/AudioPlayer'
 
 export default function WithAudioLayout({ children }: { children: React.ReactNode }) {
   return (

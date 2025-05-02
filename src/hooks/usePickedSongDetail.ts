@@ -21,7 +21,10 @@ export default function usePickedSongDetail() {
       try {
         const detail = await fetch(`${baseUrl}/api/song/detail?${query}`)
         const data: SongDetailResult = await detail.json()
-        setPickedSongDetail(data)
+        setPickedSongDetail({
+          ...data,
+          id: pickedSong.id,
+        })
       } catch (error) {
         console.error(error)
       }

@@ -4,16 +4,17 @@ import type { Song, SongsFeedResponse } from '@/lib/songs'
 import { Loader2, Shuffle } from 'lucide-react'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 import { getBaseUrl, getRandomIndex } from '@/lib/getter'
-import { Button } from '../ui/button'
+import { Button } from '../../ui/button'
 import { useCountryStore } from '@/stores/useCountryStore'
 
 interface ShuffleButtonProps {
   isLoading: boolean
   className?: string
+  isInitialPlayer?: boolean
 }
 
 export default function ShuffleButton({ isLoading, className }: ShuffleButtonProps) {
-  const { pickedSongDetail, setPickedSong } = usePickedSongStore()
+  const { setPickedSong } = usePickedSongStore()
   const { countryCode } = useCountryStore()
   const baseURL = getBaseUrl()
 
@@ -28,19 +29,15 @@ export default function ShuffleButton({ isLoading, className }: ShuffleButtonPro
     const randomIndex = getRandomIndex(songs.length)
     setPickedSong(songs[randomIndex])
   }
-  const pickedSong = usePickedSongStore((state) => state.pickedSong)
-  const isInitial = !pickedSong && !pickedSongDetail
-  const isPending = !!pickedSong && !pickedSongDetail
-  const isDisabled = isLoading || isPending
 
   return (
     <Button
       variant="ghost"
       className={`relative h-10 w-10 rounded-full hover:text-green-600 ${className}`}
-      disabled={isDisabled && !isInitial}
+      disabled={isLoading}
       onClick={handleShuffle}
     >
-      {isPending && (
+      {isLoading && (
         <span className="absolute inset-0 flex items-center justify-center">
           <Loader2 className="!h-12 !w-12 animate-spin !text-green-600 !opacity-100" />
         </span>

@@ -13,17 +13,21 @@ export default function RandomSongTrigger({
   isSongsReady,
 }: RandomSongTriggerProps) {
   const { pickedSong, pickedSongDetail } = usePickedSongStore()
+
+  const isWatingForDetail =
+    !!pickedSong && (!pickedSongDetail || pickedSong.id !== pickedSongDetail.id)
+
   return (
     <div className="flex h-12 w-full max-w-75 items-center justify-center">
       {isSongsReady ? (
         <div className={`w-full transition-opacity duration-200 ease-in-out`}>
-          {!pickedSong || pickedSongDetail ? (
-            <RandomSongButton onClick={onPickRandomSong} />
-          ) : (
+          {isWatingForDetail ? (
             <Button disabled className="h-12 w-75 hover:cursor-not-allowed">
               <Loader2 className="animate-spin" />
               <span>곡 선택하는 중..</span>
             </Button>
+          ) : (
+            <RandomSongButton onClick={onPickRandomSong} />
           )}
         </div>
       ) : (
