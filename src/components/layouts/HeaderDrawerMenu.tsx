@@ -7,7 +7,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '../ui/drawer'
-import Title from '../home/Title'
+import Title from '../common/Title'
 
 interface HeaderDrawerMenuProps {
   className: string

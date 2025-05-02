@@ -1,6 +1,6 @@
 import type { CountryCode } from '@/constants/rssQueryParams'
 import type { Song, SongsFeedResponse } from '@/lib/songs'
-import RandomSongPicker from '@/components/home/RandomSongPicker'
+import RandomSongPicker from '@/components/country/RandomSongPicker'
 import { getBaseUrl } from '@/lib/getter'
 
 interface CountryPageProps {
