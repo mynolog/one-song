@@ -1,5 +1,6 @@
-import type { Song } from '@/lib/songs'
 import type { SongDetailResult } from '@/lib/song'
+import type { Song } from '@/lib/songs'
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 

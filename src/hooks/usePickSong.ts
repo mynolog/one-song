@@ -1,6 +1,7 @@
 'use client'
 
 import type { Song } from '@/lib/songs'
+
 import { getRandomIndex } from '@/lib/getter'
 
 interface UsePickSongProps {

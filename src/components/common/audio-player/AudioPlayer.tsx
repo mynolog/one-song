@@ -2,7 +2,9 @@
 
 import type { MouseEvent } from 'react'
 import { useEffect, useRef, useState } from 'react'
+
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
+
 import AudioProgress from './AudioProgress'
 import NowPlayingControls from './NowPlayingControls'
 

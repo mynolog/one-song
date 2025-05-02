@@ -1,8 +1,9 @@
 'use client'
 
 import type { CountryCode } from '@/constants/rssQueryParams'
+
 import { useRouter } from 'next/navigation'
-import { useCountryStore } from '@/stores/useCountryStore'
+
 import {
   Select,
   SelectContent,
@@ -12,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useCountryStore } from '@/stores/useCountryStore'
 
 export default function CountrySelector() {
   const router = useRouter()

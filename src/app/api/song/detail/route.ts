@@ -1,5 +1,7 @@
 import type { SongDetailResponse, SongDetailResult } from '@/lib/song'
+
 import { NextRequest, NextResponse } from 'next/server'
+
 import { fetchSongDetail } from '@/lib/song'
 
 export async function GET(request: NextRequest) {
@@ -23,6 +25,7 @@ export async function GET(request: NextRequest) {
       ) ?? data.results[0]
 
     const response: SongDetailResult = {
+      id: null,
       collectionName: exactMatchSong?.collectionName || null,
       collectionViewUrl: exactMatchSong?.collectionViewUrl || null,
       previewUrl: exactMatchSong?.previewUrl || null,

@@ -1,10 +1,13 @@
-import type { Song } from '@/lib/songs'
 import type { SongDetailResult } from '@/lib/song'
+import type { Song } from '@/lib/songs'
+
 import { ChevronRightIcon, Heart } from 'lucide-react'
+
+import { formatDate } from '@/lib/format'
+
+import RandomSongArtwork from './RandomSongArtwork'
 import LikeControl from '../common/LikeControl'
 import { Button } from '../ui/button'
-import RandomSongArtwork from './RandomSongArtwork'
-import { formatDate } from '@/lib/format'
 
 interface RandonSongCardProps {
   pickedSong: Song

@@ -1,6 +1,6 @@
-import TrackInfo from './TrackInfo'
-import PlaybackControls from './PlaybackControls'
 import AlbumLink from './AlbumLink'
+import PlaybackControls from './PlaybackControls'
+import TrackInfo from './TrackInfo'
 
 interface NowPlayingControlsProps {
   isInitialPlayer: boolean

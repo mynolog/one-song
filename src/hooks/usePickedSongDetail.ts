@@ -1,7 +1,9 @@
 'use client'
 
 import type { SongDetailResult } from '@/lib/song'
+
 import { useEffect } from 'react'
+
 import { getBaseUrl } from '@/lib/getter'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
@@ -10,6 +12,7 @@ export default function usePickedSongDetail() {
 
   useEffect(() => {
     if (!pickedSong) return
+
     // 국가 변경 시 pickedSongDetail 중복 요청 방지
     if (pickedSong.id === pickedSongDetail?.id) return
 

@@ -1,7 +1,8 @@
 'use client'
 
-import Image from 'next/image'
 import { Music2 } from 'lucide-react'
+import Image from 'next/image'
+
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
 interface TrackInfoProps {
