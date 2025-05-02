@@ -1,6 +1,4 @@
-import { Loader2 } from 'lucide-react'
 import RandomSongButton from './RandomSongButton'
-import { Button } from '../ui/button'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
 interface RandomSongTriggerProps {
@@ -13,25 +11,19 @@ export default function RandomSongTrigger({
   isSongsReady,
 }: RandomSongTriggerProps) {
   const { pickedSong, pickedSongDetail } = usePickedSongStore()
+
+  const isWatingForDetail =
+    !!pickedSong && (!pickedSongDetail || pickedSong.id !== pickedSongDetail.id)
+
   return (
     <div className="flex h-12 w-full max-w-75 items-center justify-center">
-      {isSongsReady ? (
-        <div className={`w-full transition-opacity duration-200 ease-in-out`}>
-          {!pickedSong || pickedSongDetail ? (
-            <RandomSongButton onClick={onPickRandomSong} />
-          ) : (
-            <Button disabled className="h-12 w-75 hover:cursor-not-allowed">
-              <Loader2 className="animate-spin" />
-              <span>곡 선택하는 중..</span>
-            </Button>
-          )}
-        </div>
-      ) : (
-        <Button disabled className="h-12 w-75">
-          <Loader2 className="animate-spin" />
-          잠시만 기다려주세요..
-        </Button>
-      )}
+      <div className={`w-full transition-opacity duration-200 ease-in-out`}>
+        <RandomSongButton
+          isSongReady={isSongsReady}
+          isLoading={isWatingForDetail}
+          onClick={onPickRandomSong}
+        />
+      </div>
     </div>
   )
 }

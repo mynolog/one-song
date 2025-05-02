@@ -5,7 +5,6 @@ import { formatDate } from '@/lib/format'
 export default function RandomSongCardSkeleton() {
   return (
     <div className="flex w-[50vw] flex-col gap-4 sm:w-75">
-      {/* <div className="relative -z-50 aspect-square w-full max-w-75 overflow-hidden rounded-md"></div> */}
       <div className="-z-50 flex aspect-square w-full max-w-75 items-center justify-center rounded-md bg-[#f1f3f4]">
         <Music2 size={100} className="text-white" />
       </div>

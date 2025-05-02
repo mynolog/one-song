@@ -1,25 +1,44 @@
 import { Button } from '../ui/button'
-import { Shuffle } from 'lucide-react'
+import { Loader2, Shuffle } from 'lucide-react'
 
 interface RandomSongButtonProps {
   onClick: () => void
+  isSongReady: boolean
+  isLoading: boolean
   className?: string
-  disabled?: boolean
 }
 
 export default function RandomSongButton({
   onClick,
+  isSongReady,
+  isLoading,
   className = '',
-  disabled = false,
 }: RandomSongButtonProps) {
+  if (!isSongReady) {
+    return (
+      <Button disabled className="h-12 w-75">
+        <Loader2 className="animate-spin" />
+        잠시만 기다려주세요..
+      </Button>
+    )
+  }
   return (
     <Button
-      disabled={disabled}
+      disabled={isLoading}
       onClick={onClick}
       className={`h-12 w-full cursor-pointer ${className}`}
     >
-      <Shuffle />
-      <span className="font-semibold">추천 받기</span>
+      {isLoading ? (
+        <>
+          <Loader2 className="animate-spin" />
+          <span>곡 선택하는 중..</span>
+        </>
+      ) : (
+        <>
+          <Shuffle />
+          <span className="font-semibold">추천 받기</span>
+        </>
+      )}
     </Button>
   )
 }

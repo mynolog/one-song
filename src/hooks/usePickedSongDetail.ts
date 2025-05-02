@@ -10,6 +10,8 @@ export default function usePickedSongDetail() {
 
   useEffect(() => {
     if (!pickedSong) return
+    // 국가 변경 시 pickedSongDetail 중복 요청 방지
+    if (pickedSong.id === pickedSongDetail?.id) return
 
     const baseUrl = getBaseUrl()
     const loadSongDetail = async () => {
@@ -21,13 +23,16 @@ export default function usePickedSongDetail() {
       try {
         const detail = await fetch(`${baseUrl}/api/song/detail?${query}`)
         const data: SongDetailResult = await detail.json()
-        setPickedSongDetail(data)
+        setPickedSongDetail({
+          ...data,
+          id: pickedSong.id,
+        })
       } catch (error) {
         console.error(error)
       }
     }
     loadSongDetail()
-  }, [pickedSong, setPickedSongDetail])
+  }, [pickedSong, pickedSongDetail, setPickedSongDetail])
 
   return { pickedSongDetail }
 }
