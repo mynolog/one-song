@@ -24,7 +24,7 @@ export default function PlaybackControls({
   onToggleMute,
 }: PlaybackControlsProps) {
   return (
-    <div className="flex h-full w-full items-center justify-center gap-3 pl-1">
+    <div className="flex h-full w-full items-center gap-2 pl-1 sm:justify-center">
       <div className="flex h-full w-full items-center justify-center gap-3 pl-1">
         <ShuffleButton isLoading={isWatingForDetail} />
         {!isPlaying ? (

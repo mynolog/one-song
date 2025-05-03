@@ -31,8 +31,6 @@ export default function LikeControl({ pickedSong, pickedSongDetail }: LikeContro
   }
   const liked = isLiked(likedSong)
 
-  console.log(liked)
-
   const handleAddLikes = () => {
     addLike(likedSong)
   }
@@ -50,7 +48,7 @@ export default function LikeControl({ pickedSong, pickedSongDetail }: LikeContro
           className="cursor-pointer rounded-full"
           onClick={handleRemoveLikes}
         >
-          <Heart className="fill-purple-400 stroke-purple-400" />
+          <Heart className="!h-6 !w-6 fill-purple-400 stroke-purple-400" />
         </Button>
       ) : (
         <Button
@@ -59,7 +57,7 @@ export default function LikeControl({ pickedSong, pickedSongDetail }: LikeContro
           className="cursor-pointer rounded-full"
           onClick={handleAddLikes}
         >
-          <Heart className="text-gray-400" />
+          <Heart className="!h-6 !w-6 text-gray-400" />
         </Button>
       )}
     </>

@@ -1,4 +1,4 @@
-import AlbumLink from './AlbumLink'
+import LikedSongListToggleButton from './LikedSongListToggleButton'
 import PlaybackControls from './PlaybackControls'
 import TrackInfo from './TrackInfo'
 
@@ -16,7 +16,6 @@ interface NowPlayingControlsProps {
 
 export default function NowPlayingControls({
   isInitialPlayer,
-  isSkeletonVisible,
   isWatingForDetail,
   isReady,
   isPlaying,
@@ -43,11 +42,9 @@ export default function NowPlayingControls({
         onToggleMute={onToggleMute}
       />
 
-      <AlbumLink
-        isSkeletonVisible={isSkeletonVisible}
-        isWatingForDetail={isWatingForDetail}
-        isReady={isReady}
-      />
+      <div className="flex w-full items-center justify-end">
+        <LikedSongListToggleButton />
+      </div>
     </div>
   )
 }

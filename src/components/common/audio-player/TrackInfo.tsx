@@ -33,16 +33,16 @@ export default function TrackInfo({
 
       {(isReady || isWatingForDetail) && pickedSong && (
         <>
-          <div className="h-9 w-9 rounded-sm bg-gray-400">
+          <div className="h-8 w-8 rounded-sm bg-gray-400">
             <Image
               src={pickedSong.artworkUrl100}
-              width={36}
-              height={36}
+              width={32}
+              height={32}
               className="rounded-sm"
               alt={pickedSong.name}
             />
           </div>
-          <div className="flex w-3/4 flex-col gap-1 overflow-hidden">
+          <div className="flex w-1/3 flex-col gap-1 overflow-hidden sm:w-3/4">
             <span className="truncate">{pickedSong.name}</span>
             <span className="truncate">{pickedSong.artistName}</span>
           </div>
