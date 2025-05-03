@@ -36,10 +36,15 @@ export async function fetchSongDetail(artistName: string, title: string) {
 
   try {
     const res = await fetch(URL)
-    const data = await res.json()
-    return data
+
+    if (!res.ok) {
+      console.error('iTunes Search API 응답 실패: ', res.status)
+      return null
+    }
+    const songDetail: SongDetailResponse = await res.json()
+    return songDetail
   } catch (error) {
     console.error(error)
-    return null
+    throw error
   }
 }

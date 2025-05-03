@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(response, { status: 200 })
   } catch (error) {
-    console.error('API 에러', error)
+    console.error('서버 에러', error)
     return NextResponse.json({ error: '서버 에러' }, { status: 500 })
   }
 }

@@ -36,6 +36,6 @@ export async function fetchMostPlayedSongs(countryCode: string) {
     return songFeed
   } catch (error) {
     console.error(error)
-    return null
+    throw error
   }
 }
