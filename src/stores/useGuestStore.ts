@@ -1,19 +1,10 @@
+import type { SongDetailResult } from '@/lib/song'
+import type { Song } from '@/lib/songs'
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export interface LikedSong {
-  id: string
-  artistName: string
-  name: string
-  releaseDate: string
-  artistUrl: string
-  artworkUrl100: string
-  url: string
-  collectionName: string | null
-  collectionViewUrl: string | null
-  previewUrl: string | null
-  primaryGenreName: string | null
-}
+export type LikedSong = Song & Omit<SongDetailResult, 'id'>
 
 interface GuestStore {
   likedSongs: LikedSong[]

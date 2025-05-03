@@ -27,7 +27,7 @@ export default function RandomSongButton({
     <Button
       disabled={isLoading}
       onClick={onClick}
-      className={`h-12 w-full cursor-pointer ${className}`}
+      className={`h-10 w-full cursor-pointer ${className}`}
     >
       {isLoading ? (
         <>
