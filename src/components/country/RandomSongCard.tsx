@@ -4,8 +4,8 @@ import type { Song } from '@/lib/songs'
 import { ChevronRightIcon, Heart } from 'lucide-react'
 
 import RandomSongArtwork from './RandomSongArtwork'
-import ListenOnAppleMusicBadge from '../common/audio-player/ListenOnAppleMusicBadge'
 import LikeControl from '../common/LikeControl'
+import ListenOnAppleMusicBadge from '../common/ListenOnAppleMusicBadge'
 import { Button } from '../ui/button'
 
 interface RandonSongCardProps {
