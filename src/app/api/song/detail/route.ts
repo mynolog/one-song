@@ -18,7 +18,14 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const data: SongDetailResponse = await fetchSongDetail(artistName, title)
+    const data: SongDetailResponse | null = await fetchSongDetail(artistName, title)
+
+    if (!data) {
+      return NextResponse.json(
+        { error: 'iTunes Search API 응답 실패: ' },
+        { status: 500 },
+      )
+    }
 
     const exactMatchSong =
       data.results.find(
@@ -35,7 +42,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(response, { status: 200 })
   } catch (error) {
-    console.error(error)
+    console.error('서버 에러', error)
     return NextResponse.json({ error: '서버 에러' }, { status: 500 })
   }
 }
