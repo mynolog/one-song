@@ -10,11 +10,12 @@ import NowPlayingControls from './NowPlayingControls'
 
 export default function AudioPlayer() {
   const { pickedSong, pickedSongDetail } = usePickedSongStore()
-  const audioRef = useRef<HTMLAudioElement | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
+
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     if (!pickedSong) return
@@ -31,13 +32,21 @@ export default function AudioPlayer() {
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
     return () => audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
   }, [pickedSongDetail?.id])
-
+  // 부드러운 Progress 상태 업데이트
   useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime)
-    audio.addEventListener('timeupdate', handleTimeUpdate)
-    return () => audio.removeEventListener('timeupdate', handleTimeUpdate)
+    // TODO: 성능 최적화 필요
+    let animationId: number
+
+    const update = () => {
+      const audio = audioRef.current
+      if (audio && !audio.paused) {
+        setCurrentTime(audio.currentTime)
+      }
+      animationId = requestAnimationFrame(update)
+    }
+
+    animationId = requestAnimationFrame(update)
+    return () => cancelAnimationFrame(animationId)
   }, [])
 
   const handlePlay = () => {
