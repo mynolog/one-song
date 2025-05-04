@@ -2,6 +2,7 @@ import type { CountryCode } from '@/constants/rssQueryParams'
 import type { Song, SongsFeedResponse } from '@/lib/songs'
 
 import RandomSongPicker from '@/components/country/RandomSongPicker'
+import { RecommendedHistoryCarousel } from '@/components/country/RecommendedHistoryCarousel'
 import { getBaseUrl } from '@/lib/getter'
 
 interface CountryPageProps {
@@ -21,6 +22,7 @@ export default async function CountryPage({ params }: CountryPageProps) {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <RandomSongPicker songs={songs} countryCode={code} />
+      <RecommendedHistoryCarousel />
     </div>
   )
 }

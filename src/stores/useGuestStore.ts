@@ -7,14 +7,14 @@ import { persist } from 'zustand/middleware'
 
 export type LikedSong = Song & Omit<SongDetailResult, 'id'>
 
-interface GuestStore {
+interface GuestState {
   likedSongs: LikedSong[]
   addLike: (song: LikedSong) => void
   removeLike: (song: LikedSong) => void
   isLiked: (song: LikedSong) => boolean
 }
 
-export const useGuestStore = create<GuestStore>()(
+export const useGuestStore = create<GuestState>()(
   persist(
     (set, get) => ({
       likedSongs: [],
