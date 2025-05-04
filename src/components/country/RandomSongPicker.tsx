@@ -3,10 +3,13 @@
 import type { CountryCode } from '@/constants/rssQueryParams'
 import type { Song } from '@/lib/songs'
 
+import { useEffect } from 'react'
+
 import usePickedSongDetail from '@/hooks/usePickedSongDetail'
 import usePickSong from '@/hooks/usePickSong'
 import { useCountryStore } from '@/stores/useCountryStore'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
+import { useRecommendedHistoryStore } from '@/stores/useRecommendedHistoryStore'
 
 import CountrySelector from './CountrySelector'
 import RandomSongCard from './RandomSongCard'
@@ -20,9 +23,19 @@ interface RandomSongPickerProps {
 
 export default function RandomSongPicker({ songs, countryCode }: RandomSongPickerProps) {
   const { pickedSong, setPickedSong } = usePickedSongStore()
+  const { addHistory } = useRecommendedHistoryStore()
   const { setCountryCode } = useCountryStore()
   const { pick } = usePickSong({ songs })
   const { pickedSongDetail } = usePickedSongDetail()
+
+  useEffect(() => {
+    if (pickedSong && pickedSongDetail && pickedSong.id === pickedSongDetail.id) {
+      addHistory({
+        ...pickedSong,
+        ...pickedSongDetail,
+      })
+    }
+  }, [pickedSong, pickedSongDetail, addHistory])
 
   const isSongsReady = Array.isArray(songs) && songs.length > 0
 
@@ -35,7 +48,7 @@ export default function RandomSongPicker({ songs, countryCode }: RandomSongPicke
   }
 
   return (
-    <div className="mb-10 flex h-full min-h-[60vh] w-[50vw] flex-col items-center gap-4 sm:w-full">
+    <div className="mb-5 flex h-full w-[50vw] flex-col items-center gap-4 sm:w-full">
       <CountrySelector />
       <RandomSongTrigger
         onPickRandomSong={handlePickRandomSong}
