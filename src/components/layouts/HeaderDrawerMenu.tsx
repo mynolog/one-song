@@ -1,6 +1,11 @@
-import { Menu } from 'lucide-react'
+'use client'
+
+import { useState } from 'react'
+
+import { Menu, X } from 'lucide-react'
 
 import Title from '../common/Title'
+import { Button } from '../ui/button'
 import {
   Drawer,
   DrawerContent,
@@ -15,13 +20,25 @@ interface HeaderDrawerMenuProps {
 }
 
 export default function HeaderDrawerMenu({ className = '' }: HeaderDrawerMenuProps) {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <div className={className}>
-      <Drawer direction="right">
-        <DrawerTrigger>
-          <Menu />
+      <Drawer open={isOpen} onOpenChange={setIsOpen} direction="right">
+        <DrawerTrigger asChild>
+          <Button variant="ghost">{isOpen ? <X /> : <Menu />}</Button>
         </DrawerTrigger>
         <DrawerContent>
+          <div className="flex justify-end px-4 pt-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(false)}
+              aria-label="닫기"
+            >
+              <X />
+            </Button>
+          </div>
           <div className="px-6 py-4">
             <DrawerHeader>
               <DrawerTitle>
