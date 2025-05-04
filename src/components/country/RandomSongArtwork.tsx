@@ -15,6 +15,8 @@ export default function RandomSongArtwork({ pickedSong }: RandomSongArtworkProps
         src={getArtworkUrl(pickedSong.artworkUrl100)}
         alt={pickedSong.name}
         fill
+        priority
+        sizes="(max-width: 768px) 100vw, 300px"
         className="rounded-md object-cover transition-all duration-200 ease-in-out hover:scale-110"
       />
     </div>

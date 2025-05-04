@@ -38,6 +38,7 @@ export default function TrackInfo({
               src={pickedSong.artworkUrl100}
               width={32}
               height={32}
+              priority
               className="rounded-sm"
               alt={pickedSong.name}
             />

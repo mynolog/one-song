@@ -1,5 +1,4 @@
 'use client'
-
 import type { CountryCode } from '@/constants/rssQueryParams'
 
 import { useRouter } from 'next/navigation'
@@ -13,10 +12,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import useSyncCountryFromUrl from '@/hooks/useSyncCountryFromUrl'
 import { useCountryStore } from '@/stores/useCountryStore'
 
 export default function CountrySelector() {
   const router = useRouter()
+  useSyncCountryFromUrl()
   const { countryCode, setCountryCode } = useCountryStore()
 
   const handleCountryChange = (value: CountryCode) => {
@@ -25,7 +26,7 @@ export default function CountrySelector() {
   }
 
   return (
-    <Select defaultValue={countryCode} onValueChange={handleCountryChange}>
+    <Select value={countryCode} onValueChange={handleCountryChange}>
       <SelectTrigger className="w-full max-w-75">
         <SelectValue placeholder="국가를 선택하세요." />
       </SelectTrigger>

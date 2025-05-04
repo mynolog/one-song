@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 
-export default function LikedSongListToggleButton() {
+export default function LikedSongListButton() {
   return (
     <Button
       size="icon"

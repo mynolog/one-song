@@ -35,7 +35,7 @@ export default function RandomSongPicker({ songs, countryCode }: RandomSongPicke
   }
 
   return (
-    <div className="mt-40 mb-10 flex h-full w-[50vw] flex-col items-center justify-center gap-4 sm:w-full">
+    <div className="mb-10 flex h-full min-h-[60vh] w-[50vw] flex-col items-center gap-4 sm:w-full">
       <CountrySelector />
       <RandomSongTrigger
         onPickRandomSong={handlePickRandomSong}

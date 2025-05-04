@@ -1,5 +1,10 @@
-import LikedSongListToggleButton from './LikedSongListToggleButton'
+'use client'
+
+import { usePathname } from 'next/navigation'
+
+import LikedSongListToggleButton from './LikedSongListButton'
 import PlaybackControls from './PlaybackControls'
+import SongInfoButton from './SongInfoButton'
 import TrackInfo from './TrackInfo'
 
 interface NowPlayingControlsProps {
@@ -24,6 +29,9 @@ export default function NowPlayingControls({
   onPause,
   onToggleMute,
 }: NowPlayingControlsProps) {
+  const pathname = usePathname()
+  const isCountryPage = pathname.startsWith('/country')
+
   return (
     <div className="items-centerjustify-between grid w-full grid-cols-3 gap-1 px-4 font-semibold text-gray-600">
       <TrackInfo
@@ -37,13 +45,14 @@ export default function NowPlayingControls({
         isWatingForDetail={isWatingForDetail}
         isPlaying={isPlaying}
         isMuted={isMuted}
+        isCountryPage={isCountryPage}
         onPlay={onPlay}
         onPause={onPause}
         onToggleMute={onToggleMute}
       />
 
       <div className="flex w-full items-center justify-end">
-        <LikedSongListToggleButton />
+        {isCountryPage ? <LikedSongListToggleButton /> : <SongInfoButton />}
       </div>
     </div>
   )
