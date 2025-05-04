@@ -36,7 +36,7 @@ export default function ShuffleButton({ isLoading, className }: ShuffleButtonPro
   return (
     <Button
       variant="ghost"
-      className={`relative h-10 w-10 rounded-full hover:text-green-600 ${className}`}
+      className={`relative h-11 w-11 rounded-full hover:text-green-600 ${className}`}
       disabled={isLoading}
       onClick={handleShuffle}
     >

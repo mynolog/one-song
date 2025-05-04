@@ -8,7 +8,7 @@ import type { LikedSong } from '@/stores/useGuestStore'
 import { Headphones, Minus } from 'lucide-react'
 import Link from 'next/link'
 
-import AppleMusicIcon from '@/components/common/AppleMusicIcon'
+import AppleMusicIcon from '@/components/icons/AppleMusicIcon'
 import { Button } from '@/components/ui/button'
 import {
   Table,
@@ -33,52 +33,38 @@ export default function GuestLikedSongsPage() {
   }
 
   const handleUpdatePickedSong = (targetSong: LikedSong) => {
-    const {
-      id,
-      artistName,
-      name,
-      releaseDate,
-      artistUrl,
-      artworkUrl100,
-      url,
-      collectionName,
-      collectionViewUrl,
-      previewUrl,
-      primaryGenreName,
-    } = targetSong
-
     const newPickedSong: Song = {
-      id,
-      artistName,
-      name,
-      releaseDate,
-      artistUrl,
-      artworkUrl100,
-      url,
+      id: targetSong.id,
+      artistName: targetSong.artistName,
+      name: targetSong.name,
+      releaseDate: targetSong.releaseDate,
+      artistUrl: targetSong.artistUrl,
+      artworkUrl100: targetSong.artworkUrl100,
+      url: targetSong.url,
     }
+    setPickedSong(newPickedSong)
 
     const newPickedSongDetail: SongDetailResult = {
-      id,
-      collectionName,
-      collectionViewUrl,
-      previewUrl,
-      primaryGenreName,
+      id: targetSong.id,
+      collectionName: targetSong.collectionName,
+      collectionViewUrl: targetSong.collectionName,
+      previewUrl: targetSong.previewUrl,
+      primaryGenreName: targetSong.primaryGenreName,
     }
 
-    setPickedSong(newPickedSong)
     setPickedSongDetail(newPickedSongDetail)
   }
 
   return (
     <div className="flex h-full min-h-[60vh] w-full max-w-[1200px] flex-col items-center gap-10 px-4">
-      <div className="min-h-[50vh] w-full">
-        <Table>
+      <div className="max-h-[55vh] w-full overflow-hidden">
+        <Table className="relative w-full">
           <TableCaption className="caption-top pb-3">내가 찜한 노래</TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead>노래</TableHead>
               <TableHead className="hidden">앨범</TableHead>
-              <TableHead>Apple Music</TableHead>
+              <TableHead>전체 듣기</TableHead>
               <TableHead>미리 듣기</TableHead>
               <TableHead>찜 취소</TableHead>
             </TableRow>
@@ -130,7 +116,7 @@ export default function GuestLikedSongsPage() {
       </div>
       <div className="flex w-full items-center justify-center">
         <Button>
-          <Link href={`/country/${countryCode}`}>재생 화면으로 돌아가기</Link>
+          <Link href={`/country/${countryCode}`}>추천 페이지로 돌아가기</Link>
         </Button>
       </div>
     </div>

@@ -17,18 +17,20 @@ export default function AudioPlayer() {
   const [currentTime, setCurrentTime] = useState(0)
 
   useEffect(() => {
+    if (!pickedSong) return
     setIsPlaying(false)
     setIsMuted(false)
     setCurrentTime(0)
-  }, [pickedSong?.id])
+  }, [pickedSong?.id, pickedSong])
 
   useEffect(() => {
+    if (!pickedSongDetail?.id) return
     const audio = audioRef.current
     if (!audio) return
     const handleLoadedMetadata = () => setDuration(audio.duration)
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
     return () => audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
-  }, [pickedSongDetail])
+  }, [pickedSongDetail?.id])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -36,19 +38,6 @@ export default function AudioPlayer() {
     const handleTimeUpdate = () => setCurrentTime(audio.currentTime)
     audio.addEventListener('timeupdate', handleTimeUpdate)
     return () => audio.removeEventListener('timeupdate', handleTimeUpdate)
-  }, [])
-  // 부드러운 Progress Bar 갱신
-  useEffect(() => {
-    let animationFrameId: number
-    const update = () => {
-      const audio = audioRef.current
-      if (audio) {
-        setCurrentTime(audio.currentTime)
-      }
-      animationFrameId = requestAnimationFrame(update)
-    }
-    animationFrameId = requestAnimationFrame(update)
-    return () => cancelAnimationFrame(animationFrameId)
   }, [])
 
   const handlePlay = () => {
@@ -93,13 +82,11 @@ export default function AudioPlayer() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-1 bg-white">
-      {isReady && (
-        <audio
-          ref={audioRef}
-          src={pickedSongDetail.previewUrl ?? undefined}
-          className="hidden"
-        />
-      )}
+      <audio
+        ref={audioRef}
+        src={pickedSongDetail?.previewUrl ?? undefined}
+        className="hidden"
+      />
 
       <AudioProgress
         currentTime={currentTime}
