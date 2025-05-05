@@ -46,7 +46,7 @@ export function RecommendedHistoryCarousel() {
 
   return (
     <div
-      className={`flex w-3/4 max-w-[700px] flex-col gap-3 sm:w-[60vw] ${history.length === 0 && 'hidden'}`}
+      className={`flex w-3/4 max-w-[700px] flex-col gap-3 px-4 sm:w-[50vw] md:w-[60vw] ${history.length === 0 && 'hidden'}`}
     >
       <div className="flex w-full items-center justify-center">
         <span className="text-muted-foreground text-sm">지나간 추천 노래</span>
@@ -70,17 +70,20 @@ export function RecommendedHistoryCarousel() {
             history.map((song) => {
               const isActiveSong = song.id === pickedSong.id
               return (
-                <CarouselItem key={song.id} className="basis-1/2 lg:basis-1/3">
+                <CarouselItem
+                  key={song.id}
+                  className="basis-1/1 md:basis-1/2 xl:basis-1/3"
+                >
                   <div className="p-1">
                     <Card
                       onClick={() => handleUpdatePickedSong(song)}
                       className={`transition-all duration-150 ease-linear hover:cursor-pointer hover:bg-gray-50 ${isActiveSong && 'bg-gray-50'}`}
                     >
-                      <CardContent className="flex aspect-[5/3] flex-col items-center justify-center gap-3 p-6">
-                        <span className="w-full truncate text-center text-sm font-semibold">
+                      <CardContent className="flex aspect-[4/1] w-full flex-col items-center justify-center gap-3 p-6">
+                        <span className="flex w-full items-center justify-center truncate text-center text-sm font-semibold">
                           {song.name}
                         </span>
-                        <span className="w-full truncate text-center text-xs">
+                        <span className="flex w-full items-center justify-center truncate text-center text-xs">
                           {song.artistName}
                         </span>
                       </CardContent>
