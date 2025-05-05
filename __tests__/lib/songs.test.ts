@@ -1,43 +1,48 @@
+import { http, HttpResponse } from 'msw'
+
 import { fetchMostPlayedSongs } from '@/lib/songs'
 
 import { mockSongsFeed } from '../../__mocks__/mockSongFeed'
+import { server } from '../../__mocks__/server'
 
 describe('fetchMostPlayedSongs', () => {
   beforeEach(() => {
-    global.fetch = jest.fn() as jest.Mock
+    // console.erorr mock
     jest.spyOn(console, 'error').mockImplementation(() => {})
   })
+  beforeAll(() => server.listen())
+  afterEach(() => server.resetHandlers())
+  afterAll(() => server.close())
 
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
-  test('정상 응답 시 SongsFeed 타입의 데이터를 반환한다.', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockSongsFeed,
-    })
-
+  test('fetchMostPlayedSongs가 mock된 RSS 응답을 반환한다.', async () => {
     const result = await fetchMostPlayedSongs('kr')
     expect(result).toEqual(mockSongsFeed)
   })
 
-  test('HTTP 오류 응답 시 null을 반환한다.', async () => {
-    ;(global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: false,
-      status: 500,
-      json: async () => ({}),
-    })
-
+  test('HTTP 응답 실패 시 null을 반환한다.', async () => {
+    server.use(
+      http.get(
+        'https://rss.marketingtools.apple.com/api/v2/kr/music/most-played/100/songs.json',
+        () => {
+          return HttpResponse.json({ error: '서버 에러' }, { status: 500 })
+        },
+      ),
+    )
     const result = await fetchMostPlayedSongs('kr')
-    expect(result).toBeNull()
     expect(console.error).toHaveBeenCalledWith('Apple RSS API 응답 실패: ', 500)
+    expect(result).toBeNull()
   })
 
   test('fetch 요청 자체가 실패할 경우 에러를 던진다.', async () => {
-    const error = new Error('Network Error')
-    ;(global.fetch as jest.Mock).mockRejectedValueOnce(error)
-
-    await expect(fetchMostPlayedSongs('kr')).rejects.toThrow('Network Error')
+    server.use(
+      http.get(
+        'https://rss.marketingtools.apple.com/api/v2/kr/music/most-played/100/songs.json',
+        () => {
+          return HttpResponse.error()
+        },
+      ),
+    )
+    const error = new Error('Failed to fetch')
+    expect(fetchMostPlayedSongs('kr')).rejects.toThrow(error)
   })
 })
