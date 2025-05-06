@@ -17,7 +17,7 @@ export default function RandomSongButton({
 }: RandomSongButtonProps) {
   if (!isSongReady) {
     return (
-      <Button disabled className="h-12 w-75">
+      <Button disabled className="h-10 w-full">
         <Loader2 className="animate-spin" />
         잠시만 기다려주세요..
       </Button>

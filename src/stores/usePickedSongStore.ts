@@ -7,9 +7,11 @@ import { persist } from 'zustand/middleware'
 export interface PickedSongState {
   pickedSong: Song | null
   pickedSongDetail: SongDetailResult | null
+  hydrated: boolean
 
   setPickedSong: (song: Song) => void
   setPickedSongDetail: (songDetail: SongDetailResult | null) => void
+  setHydrated: () => void
 }
 
 export const usePickedSongStore = create<PickedSongState>()(
@@ -17,9 +19,19 @@ export const usePickedSongStore = create<PickedSongState>()(
     (set) => ({
       pickedSong: null,
       pickedSongDetail: null,
+      hydrated: false,
+
       setPickedSong: (song) => set({ pickedSong: song }),
       setPickedSongDetail: (songDetail) => set({ pickedSongDetail: songDetail }),
+      setHydrated: () => set({ hydrated: true }),
     }),
-    { name: 'audio-player' },
+    {
+      name: 'audio-player',
+      onRehydrateStorage: () => {
+        return (state) => {
+          state?.setHydrated?.()
+        }
+      },
+    },
   ),
 )
