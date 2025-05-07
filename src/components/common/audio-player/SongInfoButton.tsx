@@ -16,7 +16,7 @@ export default function SongInfoButton() {
       className="h-10 w-10 rounded-full hover:text-green-600"
       asChild
     >
-      <Link href={`/country/${countryCode}`}>
+      <Link href={`/?countryCode=${countryCode}`}>
         <DiscAlbum className="!h-7 !w-7" />
       </Link>
     </Button>
