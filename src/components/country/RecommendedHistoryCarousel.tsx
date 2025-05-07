@@ -17,7 +17,7 @@ import {
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 import { useRecommendedHistoryStore } from '@/stores/useRecommendedHistoryStore'
 
-export function RecommendedHistoryCarousel() {
+export default function RecommendedHistoryCarousel() {
   const { history } = useRecommendedHistoryStore()
   const { setPickedSong, setPickedSongDetail, pickedSong } = usePickedSongStore()
 
@@ -46,7 +46,7 @@ export function RecommendedHistoryCarousel() {
 
   return (
     <div
-      className={`flex w-3/4 max-w-[700px] flex-col gap-3 px-4 sm:w-[50vw] md:w-[60vw] ${history.length === 0 && 'hidden'}`}
+      className={`flex h-[122px] w-3/4 max-w-[700px] flex-col gap-3 px-4 sm:w-[50vw] md:w-[60vw] ${history.length === 0 && 'hidden'}`}
     >
       <div className="flex w-full items-center justify-center">
         <span className="text-muted-foreground text-sm">지나간 추천 노래</span>

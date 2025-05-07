@@ -12,6 +12,7 @@ interface GuestState {
   addLike: (song: LikedSong) => void
   removeLike: (song: LikedSong) => void
   isLiked: (song: LikedSong) => boolean
+  clearLikedSongs: () => void
 }
 
 export const useGuestStore = create<GuestState>()(
@@ -35,6 +36,11 @@ export const useGuestStore = create<GuestState>()(
       },
       isLiked: (targetSong: LikedSong) => {
         return get().likedSongs.some((song) => song.id === targetSong.id)
+      },
+      clearLikedSongs: () => {
+        set({
+          likedSongs: [],
+        })
       },
     }),
     { name: 'guest-store' },
