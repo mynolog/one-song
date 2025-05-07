@@ -1,40 +1,62 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { useSession } from 'next-auth/react'
 
-import { supabase } from '@/lib/supabase'
+import { syncLikedSongsToDB } from '@/lib/db/songs'
+import { createUser, getUserByEmail, markUserAsSyncedLikes } from '@/lib/db/users'
+import { useGuestStore } from '@/stores/useGuestStore'
 
 export default function AuthUserInitializer() {
   const { data: session, status } = useSession()
+  const userIdRef = useRef<string | null>(null)
+  const { likedSongs, clearLikedSongs } = useGuestStore()
 
   useEffect(() => {
     if (status !== 'authenticated') return
+    const user = session.user
+    if (!user) return
 
-    const registerUser = async () => {
-      if (!session?.user) return
-      const { email, name, image } = session.user
+    const initUser = async () => {
+      if (!user.email) return
+      try {
+        const existedUser = await getUserByEmail(user.email)
 
-      const { data: existedUser } = await supabase
-        .from('users')
-        .select('id')
-        .eq('email', email)
-        .single()
+        if (existedUser) {
+          userIdRef.current = existedUser.id
+          if (existedUser.has_synced_likes) return
+        }
 
-      if (!existedUser) {
-        await supabase.from('users').insert([
-          {
-            email,
-            name,
-            avatar_url: image,
-            provider: 'google',
-          },
-        ])
+        const newUser = {
+          email: user.email,
+          name: user.name,
+          image: user.image,
+          provider: 'google' as const,
+        }
+        const { id } = await createUser(newUser)
+        userIdRef.current = id
+      } catch (error) {
+        console.error(error)
       }
     }
-    registerUser()
+    initUser()
   }, [status, session])
+
+  useEffect(() => {
+    const syncLikesIfNeeded = async () => {
+      if (!userIdRef.current) return
+
+      try {
+        await syncLikedSongsToDB({ userId: userIdRef.current, likedSongs })
+        await markUserAsSyncedLikes(userIdRef.current)
+        clearLikedSongs()
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    syncLikesIfNeeded()
+  }, [likedSongs, clearLikedSongs])
 
   return null
 }
