@@ -11,21 +11,48 @@ export type Database = {
     Tables: {
       liked_songs: {
         Row: {
-          created_at: string
+          artist_name: string
+          artist_url: string
+          artwork_url_100: string
+          collection_name: string | null
+          collection_view_url: string | null
           id: string
+          preview_url: string | null
+          primary_genre_name: string | null
+          release_date: string
           song_id: string
+          track_name: string
+          track_url: string
           user_id: string
         }
         Insert: {
-          created_at?: string
+          artist_name: string
+          artist_url: string
+          artwork_url_100: string
+          collection_name?: string | null
+          collection_view_url?: string | null
           id?: string
+          preview_url?: string | null
+          primary_genre_name?: string | null
+          release_date: string
           song_id: string
+          track_name: string
+          track_url: string
           user_id: string
         }
         Update: {
-          created_at?: string
+          artist_name?: string
+          artist_url?: string
+          artwork_url_100?: string
+          collection_name?: string | null
+          collection_view_url?: string | null
           id?: string
+          preview_url?: string | null
+          primary_genre_name?: string | null
+          release_date?: string
           song_id?: string
+          track_name?: string
+          track_url?: string
           user_id?: string
         }
         Relationships: [

@@ -24,14 +24,19 @@ export async function createUser({
 }) {
   const { data, error } = await supabase
     .from('users')
-    .insert([
+    .upsert(
+      [
+        {
+          email,
+          name: name ?? null,
+          avatar_url: image ?? null,
+          provider,
+        },
+      ],
       {
-        email,
-        name: name ?? null,
-        avatar_url: image ?? null,
-        provider,
+        onConflict: 'email',
       },
-    ])
+    )
     .select('id')
     .single()
 
@@ -46,4 +51,15 @@ export async function markUserAsSyncedLikes(userId: string) {
     .eq('id', userId)
 
   if (error) throw error
+}
+
+export async function getLikedSongsByUserId(userId: string) {
+  const { data, error } = await supabase
+    .from('liked_songs')
+    .select('*')
+    .eq('user_id', userId)
+
+  if (error) throw error
+
+  return data ?? []
 }

@@ -17,16 +17,22 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useGuestStore } from '@/stores/useGuestStore'
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
-export default function LikedSongsTable() {
-  const { likedSongs, removeLike } = useGuestStore()
-  const { setPickedSong, setPickedSongDetail } = usePickedSongStore()
+interface LikedSongsTableProps {
+  likedSongs: LikedSong[]
+  onRemoveLike: (song: LikedSong) => void
+}
 
-  const handleRemoveLiked = (song: LikedSong) => {
-    removeLike(song)
+export default function LikedSongsTable({
+  likedSongs,
+  onRemoveLike,
+}: LikedSongsTableProps) {
+  const handleRemoveLike = (song: LikedSong) => {
+    onRemoveLike(song)
   }
+
+  const { setPickedSong, setPickedSongDetail } = usePickedSongStore()
 
   const handleUpdatePickedSong = (targetSong: LikedSong) => {
     const newPickedSong: Song = {
@@ -99,7 +105,7 @@ export default function LikedSongsTable() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => handleRemoveLiked(song)}
+                  onClick={() => handleRemoveLike(song)}
                 >
                   <Minus className="inline-block h-4 w-4" />
                 </Button>

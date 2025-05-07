@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 
-import LikedSongListToggleButton from './LikedSongListButton'
+import LikedSongListButton from './LikedSongListButton'
 import PlaybackControls from './PlaybackControls'
 import SongInfoButton from './SongInfoButton'
 import TrackInfo from './TrackInfo'
@@ -53,7 +53,7 @@ export default function NowPlayingControls({
       />
 
       <div className="flex w-full items-center justify-end">
-        {isLikedSongsPage ? <SongInfoButton /> : <LikedSongListToggleButton />}
+        {isLikedSongsPage ? <SongInfoButton /> : <LikedSongListButton />}
       </div>
     </div>
   )

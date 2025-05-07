@@ -4,18 +4,23 @@ import type { LikedSong } from '@/stores/useGuestStore'
 
 import { Heart } from 'lucide-react'
 
-import { useGuestStore } from '@/stores/useGuestStore'
-
 import { Button } from '../ui/button'
 
 interface LikeControlProps {
   pickedSong: Song
   pickedSongDetail: SongDetailResult
+  onAddLike: (likedSong: LikedSong) => void
+  onRemoveLike: (likedSong: LikedSong) => void
+  isLiked: (likedSong: LikedSong) => boolean
 }
 
-export default function LikeControl({ pickedSong, pickedSongDetail }: LikeControlProps) {
-  const { addLike, removeLike, isLiked } = useGuestStore()
-
+export default function LikeControl({
+  pickedSong,
+  pickedSongDetail,
+  onAddLike,
+  onRemoveLike,
+  isLiked,
+}: LikeControlProps) {
   const likedSong: LikedSong = {
     id: pickedSong.id,
     artistName: pickedSong.artistName,
@@ -31,12 +36,12 @@ export default function LikeControl({ pickedSong, pickedSongDetail }: LikeContro
   }
   const liked = isLiked(likedSong)
 
-  const handleAddLikes = () => {
-    addLike(likedSong)
+  const handleAddLike = () => {
+    onAddLike(likedSong)
   }
 
-  const handleRemoveLikes = () => {
-    removeLike(likedSong)
+  const handleRemoveLike = () => {
+    onRemoveLike(likedSong)
   }
 
   return (
@@ -46,7 +51,7 @@ export default function LikeControl({ pickedSong, pickedSongDetail }: LikeContro
           variant="ghost"
           size="icon"
           className="cursor-pointer rounded-full"
-          onClick={handleRemoveLikes}
+          onClick={handleRemoveLike}
         >
           <Heart className="!h-6 !w-6 fill-purple-400 stroke-purple-400" />
         </Button>
@@ -55,7 +60,7 @@ export default function LikeControl({ pickedSong, pickedSongDetail }: LikeContro
           variant="ghost"
           size="icon"
           className="cursor-pointer rounded-full"
-          onClick={handleAddLikes}
+          onClick={handleAddLike}
         >
           <Heart className="!h-6 !w-6 text-gray-400" />
         </Button>
