@@ -1,11 +1,18 @@
 import { LogOut } from 'lucide-react'
 import { signOut } from 'next-auth/react'
+import { toast } from 'sonner'
 
 import { Button } from '../../ui/button'
 
 export default function LogoutButton() {
   const handleSignOut = async () => {
-    await signOut()
+    toast.loading('로그아웃 처리 중..')
+    try {
+      await signOut()
+    } catch (error) {
+      console.error(error)
+      toast.error('로그아웃 실패했습니다. 다시 시도해주세요.')
+    }
   }
   return (
     <Button

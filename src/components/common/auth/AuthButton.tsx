@@ -1,13 +1,12 @@
 'use client'
-import type { Session } from 'next-auth'
+
+import { useSession } from 'next-auth/react'
 
 import GoogleLoginButton from './GoogleLoginButton'
 import LogoutButton from './LogoutButton'
 
-interface AuthButtonProps {
-  session: Session | null
-}
+export default function AuthButton() {
+  const { data: session } = useSession()
 
-export default function AuthButton({ session }: AuthButtonProps) {
   return session ? <LogoutButton /> : <GoogleLoginButton />
 }

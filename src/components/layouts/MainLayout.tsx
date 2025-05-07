@@ -1,14 +1,14 @@
-import { auth } from '@/auth'
+'use client'
 
 import Footer from './Footer'
 import Header from './Header'
+import AuthUserInitializer from '../common/auth/AuthUserInitializer'
 
-export default async function MainLayout({ children }: { children: React.ReactNode }) {
-  const session = await auth()
-
+export default function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <Header session={session} />
+      <Header />
+      <AuthUserInitializer />
       <main className="flex flex-1 flex-col items-center justify-center">{children}</main>
       <Footer />
     </div>

@@ -1,11 +1,18 @@
 import { signIn } from 'next-auth/react'
+import { toast } from 'sonner'
 
 import GoogleIcon from '../../icons/GoogleIcon'
 import { Button } from '../../ui/button'
 
 export default function GoogleLoginButton() {
   const handleSignIn = async () => {
-    await signIn('google')
+    toast.loading('Google 로그인 중..')
+    try {
+      await signIn('google', { callbackUrl: '/?login=success' })
+    } catch (error) {
+      console.error(error)
+      toast.error('로그인 실패했습니다. 다시 시도해주세요.')
+    }
   }
 
   return (
