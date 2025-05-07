@@ -22,7 +22,7 @@ export default function CountrySelector() {
 
   const handleCountryChange = (value: CountryCode) => {
     setCountryCode(value)
-    router.push(`/country/${value}`)
+    router.push(`/?countryCode=${value}`)
   }
 
   return (

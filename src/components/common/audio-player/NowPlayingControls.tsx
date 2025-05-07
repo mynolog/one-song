@@ -30,7 +30,8 @@ export default function NowPlayingControls({
   onToggleMute,
 }: NowPlayingControlsProps) {
   const pathname = usePathname()
-  const isCountryPage = pathname.startsWith('/country')
+  const isLikedSongsPage =
+    pathname.startsWith('/guest/liked-songs') || pathname.startsWith('/me/liked-songs')
 
   return (
     <div className="items-centerjustify-between grid w-full grid-cols-3 gap-1 px-4 font-semibold text-gray-600">
@@ -45,14 +46,14 @@ export default function NowPlayingControls({
         isWatingForDetail={isWatingForDetail}
         isPlaying={isPlaying}
         isMuted={isMuted}
-        isCountryPage={isCountryPage}
+        isLikedSongsPage={isLikedSongsPage}
         onPlay={onPlay}
         onPause={onPause}
         onToggleMute={onToggleMute}
       />
 
       <div className="flex w-full items-center justify-end">
-        {isCountryPage ? <LikedSongListToggleButton /> : <SongInfoButton />}
+        {isLikedSongsPage ? <SongInfoButton /> : <LikedSongListToggleButton />}
       </div>
     </div>
   )
