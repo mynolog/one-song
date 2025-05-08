@@ -37,6 +37,7 @@ export default function MyLikedSongs({ initialSongs, totalPages }: MyLikedSongsP
       if (fetchedSongs) {
         setLikedSongs(
           fetchedSongs.map((song) => ({
+            // TODO: 타입 정의 및 유틸함수로 리팩토링
             id: song.song_id,
             artistName: song.artist_name,
             artistUrl: song.artist_url,

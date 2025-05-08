@@ -44,6 +44,7 @@ export default function RandomSongCard({
       const songs = await getLikedSongsByUserId(userId)
       if (songs) {
         setLikedSongs(
+          // TODO: 타입 정의 및 유틸함수로 리팩토링
           songs.map((song) => ({
             id: song.song_id,
             artistName: song.artist_name,
