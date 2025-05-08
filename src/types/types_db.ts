@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       liked_songs: {
         Row: {
+          added_at: string
           artist_name: string
           artist_url: string
           artwork_url_100: string
@@ -26,6 +27,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          added_at: string
           artist_name: string
           artist_url: string
           artwork_url_100: string
@@ -41,6 +43,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          added_at?: string
           artist_name?: string
           artist_url?: string
           artwork_url_100?: string

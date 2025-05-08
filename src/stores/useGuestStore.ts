@@ -5,7 +5,10 @@ import { toast } from 'sonner'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-export type LikedSong = Song & Omit<SongDetailResult, 'id'>
+export type LikedSong = Song &
+  Omit<SongDetailResult, 'id'> & {
+    addedAt: string
+  }
 
 interface GuestState {
   likedSongs: LikedSong[]
