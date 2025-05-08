@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 
 import { ChevronRightIcon, Heart } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import { toast } from 'sonner'
 
 import { addLike, removeLike } from '@/lib/db/likes'
 import { getLikedSongsByUserId } from '@/lib/db/users'
@@ -29,8 +30,8 @@ export default function RandomSongCard({
 }: RandonSongCardProps) {
   const [likedSongs, setLikedSongs] = useState<LikedSong[]>([])
   const {
-    addLike: guestAddLike,
-    removeLike: guestRemoveLike,
+    addLike: localAddLike,
+    removeLike: localRemoveLike,
     isLiked: guestLiked,
   } = useGuestStore()
   const { status } = useSession()
@@ -62,13 +63,34 @@ export default function RandomSongCard({
     fetchLikedSongs()
   }, [userId])
 
+  const guestAddLike = (song: LikedSong) => {
+    try {
+      localAddLike(song)
+      toast.success('1곡이 찜한 노래 목록에 추가되었습니다.')
+    } catch (error) {
+      console.error(error)
+      toast.error('목록 추가에 실패했습니다. 잠시 후 다시 시도해 주세요.')
+    }
+  }
+  const guestRemoveLike = (song: LikedSong) => {
+    try {
+      localRemoveLike(song)
+      toast.success('1곡이 찜한 노래 목록에서 삭제되었습니다.')
+    } catch (error) {
+      console.error(error)
+      toast.error('삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.')
+    }
+  }
+
   const userAddLike = async (song: LikedSong) => {
     if (!userId) return
     try {
       await addLike({ userId, song })
       setLikedSongs((prevState) => [...prevState, song])
+      toast.success('1곡이 찜한 노래 목록에 추가되었습니다.')
     } catch (error) {
       console.error(error)
+      toast.error('목록 추가에 실패했습니다. 잠시 후 다시 시도해 주세요.')
     }
   }
 
@@ -77,8 +99,10 @@ export default function RandomSongCard({
     try {
       await removeLike({ userId, songId: song.id })
       setLikedSongs((prevState) => prevState.filter((s) => s.id !== song.id))
+      toast.success('1곡이 찜한 노래 목록에서 삭제되었습니다.')
     } catch (error) {
       console.error(error)
+      toast.error('삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.')
     }
   }
 

@@ -4,6 +4,8 @@ import type { LikedSong } from '@/stores/useGuestStore'
 
 import { useEffect, useState } from 'react'
 
+import { toast } from 'sonner'
+
 import { removeLike } from '@/lib/db/likes'
 import { getLikedSongsByUserId } from '@/lib/db/users'
 import { useAuthStore } from '@/stores/useAuthStore'
@@ -44,9 +46,11 @@ export default function MyLikedSongs() {
     if (!userId) return
     try {
       await removeLike({ userId, songId: song.id })
+      toast.success('1곡이 삭제되었습니다.')
       setLikedSongs((prevState) => prevState.filter((s) => s.id !== song.id))
     } catch (error) {
       console.error(error)
+      toast.error('삭제에 실패했습니다. 잠시 후 다시 시도해 주세요.')
     }
   }
 
