@@ -33,6 +33,7 @@ export default function LikeControl({
     collectionViewUrl: pickedSongDetail.collectionViewUrl,
     previewUrl: pickedSongDetail.previewUrl,
     primaryGenreName: pickedSongDetail.primaryGenreName,
+    addedAt: new Date().toISOString(),
   }
   const liked = isLiked(likedSong)
 

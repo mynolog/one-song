@@ -2,7 +2,6 @@
 
 import type { SongDetailResult } from '@/lib/song'
 import type { Song } from '@/lib/songs'
-import type { LikedSong } from '@/stores/useGuestStore'
 
 import Autoplay from 'embla-carousel-autoplay'
 
@@ -21,7 +20,7 @@ export default function RecommendedHistoryCarousel() {
   const { history } = useRecommendedHistoryStore()
   const { setPickedSong, setPickedSongDetail, pickedSong } = usePickedSongStore()
 
-  const handleUpdatePickedSong = (targetSong: LikedSong) => {
+  const handleUpdatePickedSong = (targetSong: Song & SongDetailResult) => {
     const newPickedSong: Song = {
       id: targetSong.id,
       artistName: targetSong.artistName,

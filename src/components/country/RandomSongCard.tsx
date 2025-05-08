@@ -65,12 +65,8 @@ export default function RandomSongCard({
   }, [userId])
 
   const guestAddLike = (song: LikedSong) => {
-    const newSong: LikedSong = {
-      ...song,
-      addedAt: new Date().toISOString(),
-    }
     try {
-      localAddLike(newSong)
+      localAddLike(song)
       toast.success('1곡이 찜한 노래 목록에 추가되었습니다.')
     } catch (error) {
       console.error(error)
@@ -89,12 +85,8 @@ export default function RandomSongCard({
 
   const userAddLike = async (song: LikedSong) => {
     if (!userId) return
-    const newSong: LikedSong = {
-      ...song,
-      addedAt: new Date().toISOString(),
-    }
     try {
-      await addLike({ userId, song: newSong })
+      await addLike({ userId, song })
       setLikedSongs((prevState) => [...prevState, song])
       toast.success('1곡이 찜한 노래 목록에 추가되었습니다.')
     } catch (error) {

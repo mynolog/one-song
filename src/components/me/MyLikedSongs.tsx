@@ -35,6 +35,7 @@ export default function MyLikedSongs() {
             releaseDate: song.release_date,
             name: song.track_name,
             url: song.track_url,
+            addedAt: song.added_at,
           })),
         )
       }
