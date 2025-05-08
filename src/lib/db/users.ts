@@ -1,4 +1,4 @@
-import { supabase } from '../supabase'
+import { supabase } from '../supabase/client'
 
 export async function getUserByEmail(email: string) {
   const { data, error } = await supabase
@@ -63,4 +63,44 @@ export async function getLikedSongsByUserId(userId: string) {
   if (error) throw error
 
   return data ?? []
+}
+
+export async function getLikedSongsByUserIdPaginated({
+  userId,
+  page,
+  pageSize = 10,
+}: {
+  userId: string
+  page: number
+  pageSize?: number
+}) {
+  const from = (page - 1) * pageSize
+  const to = from + pageSize - 1
+
+  const { data, error } = await supabase
+    .from('liked_songs')
+    .select('*')
+    .eq('user_id', userId)
+    .order('added_at', { ascending: false })
+    .range(from, to)
+
+  if (error) throw error
+  return data ?? []
+}
+
+export async function getTotalPagesByUserId({
+  userId,
+  pageSize = 10,
+}: {
+  userId: string
+  pageSize?: number
+}) {
+  const { count, error } = await supabase
+    .from('liked_songs')
+    .select('*', { count: 'exact', head: true })
+    .eq('user_id', userId)
+
+  if (error) throw error
+
+  return Math.ceil((count ?? 0) / pageSize)
 }

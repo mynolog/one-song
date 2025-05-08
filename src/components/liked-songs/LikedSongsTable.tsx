@@ -58,7 +58,7 @@ export default function LikedSongsTable({
   }
 
   return (
-    <div className="max-h-[55vh] w-full overflow-hidden">
+    <div className="h-[55vh] w-full overflow-hidden">
       <Table className="relative w-full">
         <TableCaption className="caption-top pb-3">내가 찜한 노래</TableCaption>
         <TableHeader>

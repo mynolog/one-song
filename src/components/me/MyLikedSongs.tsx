@@ -2,28 +2,42 @@
 
 import type { LikedSong } from '@/stores/useGuestStore'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 
 import { removeLike } from '@/lib/db/likes'
-import { getLikedSongsByUserId } from '@/lib/db/users'
+import { getLikedSongsByUserIdPaginated } from '@/lib/db/users'
 import { useAuthStore } from '@/stores/useAuthStore'
 
+import LikedSongsPagination from '../liked-songs/LikedSongsPagination'
 import LikedSongsTable from '../liked-songs/LikedSongsTable'
 
-export default function MyLikedSongs() {
-  const [likedSongs, setLikedSongs] = useState<LikedSong[]>([])
+interface MyLikedSongsProps {
+  initialSongs: LikedSong[]
+  totalPages: number
+}
+
+export default function MyLikedSongs({ initialSongs, totalPages }: MyLikedSongsProps) {
+  const [likedSongs, setLikedSongs] = useState<LikedSong[]>(initialSongs)
   const { userId } = useAuthStore()
+  const { status } = useSession()
+  const [page, setPage] = useState(1)
+  const hasMounted = useRef(false)
 
   useEffect(() => {
-    if (!userId) return
+    if (!userId || status !== 'authenticated') return
 
-    const fetchLikedSongs = async () => {
-      const songs = await getLikedSongsByUserId(userId)
-      if (songs) {
+    const fetchLikedSongsByPage = async () => {
+      if (page === 1 && !hasMounted.current) {
+        return
+      }
+      const fetchedSongs = await getLikedSongsByUserIdPaginated({ userId, page })
+      if (fetchedSongs) {
         setLikedSongs(
-          songs.map((song) => ({
+          fetchedSongs.map((song) => ({
+            // TODO: 타입 정의 및 유틸함수로 리팩토링
             id: song.song_id,
             artistName: song.artist_name,
             artistUrl: song.artist_url,
@@ -40,8 +54,9 @@ export default function MyLikedSongs() {
         )
       }
     }
-    fetchLikedSongs()
-  }, [userId])
+    fetchLikedSongsByPage()
+    hasMounted.current = true
+  }, [userId, page, status])
 
   const handleRemoveLike = async (song: LikedSong) => {
     if (!userId) return
@@ -55,5 +70,14 @@ export default function MyLikedSongs() {
     }
   }
 
-  return <LikedSongsTable likedSongs={likedSongs} onRemoveLike={handleRemoveLike} />
+  return (
+    <>
+      <LikedSongsTable likedSongs={likedSongs} onRemoveLike={handleRemoveLike} />
+      <LikedSongsPagination
+        page={page}
+        totalPages={totalPages}
+        onPageChange={(targetPage: number) => setPage(targetPage)}
+      />
+    </>
+  )
 }
