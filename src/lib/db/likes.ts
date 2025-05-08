@@ -25,6 +25,7 @@ export async function syncLikedSongsToDB({
       preview_url: song.previewUrl ?? null,
       primary_genre_name: song.primaryGenreName ?? null,
       release_date: song.releaseDate,
+      added_at: song.addedAt,
     })),
   )
   if (error) {
@@ -62,6 +63,7 @@ export async function addLike({ userId, song }: { userId: string; song: LikedSon
       preview_url: song.previewUrl ?? null,
       primary_genre_name: song.primaryGenreName ?? null,
       release_date: song.releaseDate,
+      added_at: song.addedAt,
     },
   ])
 
