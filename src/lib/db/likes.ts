@@ -1,6 +1,6 @@
 import type { LikedSong } from '@/stores/useGuestStore'
 
-import { supabase } from '../supabase'
+import { supabase } from '../supabase/supabase'
 
 export async function syncLikedSongsToDB({
   userId,
