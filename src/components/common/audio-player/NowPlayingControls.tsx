@@ -8,6 +8,7 @@ import LikedSongListButton from './LikedSongListButton'
 import PlaybackControls from './PlaybackControls'
 import SongInfoButton from './SongInfoButton'
 import TrackInfo from './TrackInfo'
+import WithTooltip from '../WithTooltip'
 
 interface NowPlayingControlsProps {
   isInitialPlayer: boolean
@@ -55,7 +56,15 @@ function NowPlayingControls({
       />
 
       <div className="flex w-full items-center justify-end">
-        {isLikedSongsPage ? <SongInfoButton /> : <LikedSongListButton />}
+        {isLikedSongsPage ? (
+          <WithTooltip content="오늘의 추천 노래">
+            <SongInfoButton />
+          </WithTooltip>
+        ) : (
+          <WithTooltip content="내가 찜한 노래">
+            <LikedSongListButton />
+          </WithTooltip>
+        )}
       </div>
     </div>
   )

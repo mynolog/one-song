@@ -17,6 +17,7 @@ import { LikedSong, useGuestStore } from '@/stores/useGuestStore'
 import RandomSongArtwork from './RandomSongArtwork'
 import LikeControl from '../common/LikeControl'
 import ListenOnAppleMusicBadge from '../common/ListenOnAppleMusicBadge'
+import WithTooltip from '../common/WithTooltip'
 import { Button } from '../ui/button'
 
 interface RandonSongCardProps {
@@ -150,17 +151,19 @@ export default function RandomSongCard({
             </Button>
           )}
         </div>
-        <div className="flex w-full items-center justify-center overflow-hidden text-sm font-semibold text-gray-600 hover:text-green-600">
-          <a
-            href={pickedSong.artistUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex w-full items-center justify-center"
-          >
-            <span className="truncate">{pickedSong.artistName}</span>
-            <ChevronRightIcon className="h-4 flex-shrink-0" />
-          </a>
-        </div>
+        <WithTooltip content="Apple Muisc 아티스트 정보 보기 (새 탭)">
+          <div className="flex w-full items-center justify-center overflow-hidden text-sm font-semibold text-gray-600 hover:text-green-600">
+            <a
+              href={pickedSong.artistUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center"
+            >
+              <span className="truncate">{pickedSong.artistName}</span>
+              <ChevronRightIcon className="h-4 flex-shrink-0" />
+            </a>
+          </div>
+        </WithTooltip>
         <div className="flex w-full items-center justify-center pt-2">
           <a
             href={pickedSong.url ?? undefined}
