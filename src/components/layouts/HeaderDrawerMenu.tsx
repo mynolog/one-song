@@ -4,6 +4,8 @@ import { useState } from 'react'
 
 import { Menu, X } from 'lucide-react'
 
+import DynamicLiks from './DynamicLinks'
+import AuthButton from '../common/auth/AuthButton'
 import Title from '../common/Title'
 import { Button } from '../ui/button'
 import {
@@ -45,10 +47,12 @@ export default function HeaderDrawerMenu({ className = '' }: HeaderDrawerMenuPro
                 <Title />
               </DrawerTitle>
             </DrawerHeader>
-            <ul className="flex flex-col gap-5 py-4 font-semibold">
-              <li>회원가입</li>
-              <li>오늘의 추천 노래</li>
-              <li>내가 찜한 노래</li>
+            <ul
+              className="flex flex-col gap-5 py-4 font-semibold"
+              onClick={() => setIsOpen(false)}
+            >
+              <AuthButton />
+              <DynamicLiks />
             </ul>
           </div>
           <DrawerFooter>

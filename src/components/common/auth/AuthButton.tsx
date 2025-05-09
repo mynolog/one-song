@@ -5,8 +5,14 @@ import { useSession } from 'next-auth/react'
 import GoogleLoginButton from './GoogleLoginButton'
 import LogoutButton from './LogoutButton'
 
-export default function AuthButton() {
+interface AuthButtonProps {
+  className?: string
+}
+
+export default function AuthButton({ className = '' }: AuthButtonProps) {
   const { data: session } = useSession()
 
-  return session ? <LogoutButton /> : <GoogleLoginButton />
+  return (
+    <div className={className}>{session ? <LogoutButton /> : <GoogleLoginButton />}</div>
+  )
 }
