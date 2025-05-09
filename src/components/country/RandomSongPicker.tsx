@@ -3,7 +3,9 @@
 import type { CountryCode } from '@/constants/rssQueryParams'
 import type { Song } from '@/lib/songs'
 
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+import { toast } from 'sonner'
 
 import usePickedSongDetail from '@/hooks/usePickedSongDetail'
 import usePickSong from '@/hooks/usePickSong'
@@ -20,14 +22,40 @@ import RandomSongTrigger from './RandomSongTrigger'
 interface RandomSongPickerProps {
   songs: Song[]
   countryCode: CountryCode
+  hasError: boolean
 }
 
-export default function RandomSongPicker({ songs, countryCode }: RandomSongPickerProps) {
+export default function RandomSongPicker({
+  songs,
+  countryCode,
+  hasError,
+}: RandomSongPickerProps) {
   const { pickedSong, setPickedSong, hydrated } = usePickedSongStore()
   const { addHistory } = useRecommendedHistoryStore()
   const { setCountryCode } = useCountryStore()
   const { pick } = usePickSong({ songs })
   const { pickedSongDetail } = usePickedSongDetail()
+  const [hasMounted, setHasMounted] = useState(false)
+
+  const hasShownToastRef = useRef(false)
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (hasMounted && hasError && !hasShownToastRef.current) {
+      console.log('a')
+      toast('Top100 곡 목록 불러오기에 실패하였습니다.', {
+        action: {
+          label: '새로고침',
+          onClick: () => (window.location.href = '/'),
+        },
+        duration: Infinity,
+      })
+      hasShownToastRef.current = true
+    }
+  }, [hasError, hasMounted])
 
   useEffect(() => {
     if (pickedSong && pickedSongDetail && pickedSong.id === pickedSongDetail.id) {
