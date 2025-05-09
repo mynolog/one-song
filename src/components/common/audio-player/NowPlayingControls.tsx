@@ -1,5 +1,7 @@
 'use client'
 
+import { memo } from 'react'
+
 import { usePathname } from 'next/navigation'
 
 import LikedSongListButton from './LikedSongListButton'
@@ -19,7 +21,7 @@ interface NowPlayingControlsProps {
   onToggleMute: () => void
 }
 
-export default function NowPlayingControls({
+function NowPlayingControls({
   isInitialPlayer,
   isWatingForDetail,
   isReady,
@@ -58,3 +60,5 @@ export default function NowPlayingControls({
     </div>
   )
 }
+
+export default memo(NowPlayingControls)

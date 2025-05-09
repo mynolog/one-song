@@ -4,14 +4,14 @@ import { Progress } from '@/components/ui/progress'
 import { formatTime } from '@/lib/format'
 
 interface AudioProgressProps {
-  currentTime: number
+  displayTime: number
   duration: number
   isReady: boolean
   onSeek: (e: MouseEvent<HTMLDivElement>) => void
 }
 
 export default function AudioProgress({
-  currentTime,
+  displayTime,
   duration,
   isReady,
   onSeek,
@@ -20,13 +20,13 @@ export default function AudioProgress({
     <div className="w-full px-4">
       <div onClick={onSeek} className="relative w-full py-1">
         <Progress
-          value={duration > 0 ? (currentTime / duration) * 100 : 0}
+          value={duration > 0 ? (displayTime / duration) * 100 : 0}
           className={`${isReady ? 'hover:cursor-pointer' : 'hover:cursor-not-allowed'}`}
         />
       </div>
       <div className="flex justify-between text-[0.7rem] font-semibold">
         <span className={`${isReady ? 'text-green-600' : 'text-muted-foreground'}`}>
-          {formatTime(currentTime)}
+          {formatTime(displayTime)}
         </span>
         <span className="text-muted-foreground">{formatTime(duration)}</span>
       </div>
