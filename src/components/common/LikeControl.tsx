@@ -54,7 +54,7 @@ export default function LikeControl({
           className="cursor-pointer rounded-full"
           onClick={handleRemoveLike}
         >
-          <Heart className="!h-6 !w-6 fill-purple-400 stroke-purple-400" />
+          <Heart className="!h-6 !w-6 fill-[#FA233B] stroke-[#FA233B]" />
         </Button>
       ) : (
         <Button
