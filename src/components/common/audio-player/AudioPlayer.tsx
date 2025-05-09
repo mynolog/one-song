@@ -1,7 +1,7 @@
 'use client'
 
 import type { MouseEvent } from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 
 import { usePickedSongStore } from '@/stores/usePickedSongStore'
 
@@ -13,7 +13,8 @@ export default function AudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [duration, setDuration] = useState(0)
-  const [currentTime, setCurrentTime] = useState(0)
+  const [displayTime, setDisplayTime] = useState(0)
+  const currentTime = useRef(0)
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
@@ -21,7 +22,8 @@ export default function AudioPlayer() {
     if (!pickedSong) return
     setIsPlaying(false)
     setIsMuted(false)
-    setCurrentTime(0)
+    setDisplayTime(0)
+    currentTime.current = 0
   }, [pickedSong?.id, pickedSong])
 
   useEffect(() => {
@@ -36,11 +38,17 @@ export default function AudioPlayer() {
   useEffect(() => {
     // TODO: 성능 최적화 필요
     let animationId: number
+    let lastUpdateTime = 0
 
     const update = () => {
       const audio = audioRef.current
       if (audio && !audio.paused) {
-        setCurrentTime(audio.currentTime)
+        const now = audio.currentTime
+        currentTime.current = now
+        if (Math.abs(now - lastUpdateTime) > 0.1) {
+          lastUpdateTime = now
+          setDisplayTime(now)
+        }
       }
       animationId = requestAnimationFrame(update)
     }
@@ -49,7 +57,7 @@ export default function AudioPlayer() {
     return () => cancelAnimationFrame(animationId)
   }, [])
 
-  const handlePlay = () => {
+  const handlePlay = useCallback(() => {
     if (!audioRef.current) return
     try {
       audioRef.current.play()
@@ -57,30 +65,36 @@ export default function AudioPlayer() {
     } catch (error) {
       console.error('재생 실패', error)
     }
-  }
+  }, [])
 
-  const handlePause = () => {
+  const handlePause = useCallback(() => {
     if (!audioRef.current) return
     audioRef.current.pause()
     setIsPlaying(false)
-  }
+  }, [])
 
-  const handleSeek = (e: MouseEvent<HTMLDivElement>) => {
-    const audio = audioRef.current
-    if (!audio || duration === 0) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const clickX = e.clientX - rect.left
-    const clickRatio = clickX / rect.width
-    const newTime = clickRatio * duration
-    audio.currentTime = newTime
-  }
+  const handleSeek = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      const audio = audioRef.current
+      if (!audio || duration === 0) return
+      const rect = e.currentTarget.getBoundingClientRect()
+      const clickX = e.clientX - rect.left
+      const clickRatio = clickX / rect.width
+      const newTime = clickRatio * duration
+      audio.currentTime = newTime
+      if (audio.paused) {
+        setDisplayTime(newTime)
+      }
+    },
+    [duration],
+  )
 
-  const handleToggleMute = () => {
+  const handleToggleMute = useCallback(() => {
     const audio = audioRef.current
     if (!audio) return
     audio.muted = !audio.muted
     setIsMuted(audio.muted)
-  }
+  }, [])
 
   const isInitialPlayer = !pickedSong && !pickedSongDetail
   const isSkeletonVisible = !!pickedSong && !pickedSongDetail
@@ -98,7 +112,7 @@ export default function AudioPlayer() {
       />
 
       <AudioProgress
-        currentTime={currentTime}
+        displayTime={displayTime}
         duration={duration}
         isReady={isReady}
         onSeek={handleSeek}
