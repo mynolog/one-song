@@ -16,7 +16,7 @@ export default function Header() {
         <div className="flex w-full items-center justify-end gap-4">
           <ul className="flex items-center justify-end gap-4 text-xs font-semibold">
             <DynamicLiks className="hidden md:block" />
-            <AuthButton className="hidden md:block" />
+            <AuthButton className="hidden" />
           </ul>
           <HeaderDrawerMenu className="cursor-pointer md:hidden" />
         </div>

@@ -51,7 +51,7 @@ export default function HeaderDrawerMenu({ className = '' }: HeaderDrawerMenuPro
               className="flex flex-col gap-5 py-4 font-semibold"
               onClick={() => setIsOpen(false)}
             >
-              <AuthButton />
+              <AuthButton className="hidden" />
               <DynamicLiks />
             </ul>
           </div>
